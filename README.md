@@ -1,6 +1,6 @@
 # BetterDiscordApp extensions
 A collection of some of my BetterDiscord extensions (themes, plugins)  
-Requires [BetterDiscordApp](
+Requires [BetterDiscordApp](https://github.com/Jiiks/BetterDiscordApp)
 
 ## Themes
 All themes go under %AppData%/BetterDiscord/themes  
