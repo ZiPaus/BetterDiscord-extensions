@@ -13,9 +13,9 @@
  */
 
 var containers = [
-    { className: 'guilds-wrapper', position: 'right'},
-    { className: 'channels-wrap', position: 'right'},
-    { className: 'channel-members-wrap', position: 'left'}
+    { label: 'Server list', className: 'guilds-wrapper', position: 'right', enabled: true},
+    { label: 'Channel list', className: 'channels-wrap', position: 'right', enabled: true},
+    { label: 'User list', className: 'channel-members-wrap', position: 'left', enabled: false}
 ];
 
 function ToggleSections() {}
@@ -34,8 +34,7 @@ ToggleSections.prototype.onSwitch = function() {
 
     containers.forEach(function(container) {
         var elem = $("."+ container.className);
-        if(elem.length === 0) return;
-        else self.attachHandler(container);
+        self.attachHandler(container);
     });
 };
 
@@ -64,8 +63,18 @@ ToggleSections.prototype.getAuthor = function() {
 };
 
 ToggleSections.prototype.attachHandler = function(container) {
-    var section = $("."+container.className), initialWidth;
-    if( $("#toggle-"+ container.className).length > 0 ) return;
+    var section = $("."+container.className),
+        initialWidth,
+        buttonExists = $("#toggle-"+ container.className).length > 0;
+        console.log(buttonExists, container.enabled);
+    if(buttonExists && !container.enabled) {
+        console.log("sup");
+        $("#toggle-"+ container.className).unbind("click");
+        $("#toggle-"+ container.className).remove();
+        return;
+    }
+
+    if(buttonExists || !container.enabled) return;
 
     section.append('<div class="toggle-section '+ container.position +'" id="toggle-'+ container.className +'"></div>');
     section.addClass("toggleable");
@@ -131,4 +140,31 @@ ToggleSections.prototype.addStyling = function() {
     }
 
     $("#toggle-sections").append(css);
+}
+
+ToggleSections.prototype.getSettingsPanel = function () {
+    var settingsContainer = $('<div/>', { id: "ts-settings" });
+
+    for (var i = 0; i < containers.length; i++) {
+        var container = containers[i];
+
+        container.enabled
+            ? settingsContainer.append('<input type="checkbox" onclick="ToggleSections.prototype.handleCheckbox.call(this, '+i+')" id="ts-'+container.className+'" checked /> <span>'+ container.label +'</span> <br/>')
+            : settingsContainer.append('<input type="checkbox" onclick="ToggleSections.prototype.handleCheckbox.call(this, '+i+')" id="ts-'+container.className+'" /> <span>'+ container.label +'</span> <br/>')
+    }
+
+
+    return settingsContainer;
+};
+
+ToggleSections.prototype.handleCheckbox = function(i) {
+    var elem = $(this),
+        isChecked = elem.attr("checked");
+
+    isChecked ? elem.removeAttr("checked") : elem.attr("checked", "checked");
+    console.log(containers[i].enabled);
+    containers[i].enabled = containers[i].enabled ? false : true;
+    console.log(containers);
+
+    ToggleSections.prototype.onSwitch();
 }
