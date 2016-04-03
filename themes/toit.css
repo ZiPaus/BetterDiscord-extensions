@@ -1,4 +1,4 @@
-//META{"name":"Toit","description":"A dark, compact layout","author":"kettui","version":"1.5.0"}*//
+//META{"name":"Toit","description":"A dark, compact layout","author":"kettui","version":"1.5.1"}*//
 
 /*
     Installation
@@ -189,8 +189,8 @@
 		padding-left: 30px;
 		padding-right: 5px;
 		background: transparent !important;
-		margin-top: -6px;
-		top: 4px;
+		margin-top: 0 !important;
+		top: -1px;
 		left: -70px !important;
 	    border-radius: 0 21px 21px 0 !important;
 		transition: left 250ms; transition: padding 250ms;
@@ -199,7 +199,7 @@
 	.guilds li:hover .guild-inner:before {
 		left: -45px !important;
 		padding-right: 42px;
-		margin-top: -6px;
+		margin-top: 0;
 		border-radius: 0 20px 20px 0;
 		background: rgba(115, 139, 215, 0.2) !important;
 	}
@@ -208,7 +208,6 @@
 	.guilds li.active .guild-inner:before {
 		left: -45px !important;
 		padding-right: 41px;
-		margin-top: -6px;
 		border-radius: 0 20px 20px 0;
 		background: #738bd7 !important;
 		transition: background 350ms;
@@ -397,7 +396,7 @@
 		border-bottom: 1px solid #1c1e22;
 	}
 
-
+	.message-group .message { position: relative; }
 	.message-group.compact .comment .markup { padding-left: 90px; }
 	.message-group .comment .markup {
 		min-height: 25px;
@@ -415,6 +414,7 @@
 	}
 
 	.message-group.compact .accessory { padding-left: 60px; }
+	.message .btn-option { position: relative; z-index: 3 !important; }
 
 	/* Twitch emote menu icons */
 	#twitchcord-button-container { bottom: 31px; }
@@ -461,12 +461,24 @@
 	}
 
 	/* Spoiler messages */
+	.spoiler { line-height: 0; }
+	.spoiler > span {
+		display: flex;
+		position: relative;
+		top: -21px;
+		max-height: 25px;
+	}
+
 	.spoiler:before {
+		position: absolute;
 		background: rgba(0,0,0,0.7);
 		border-radius: 6px;
 		border: 1px solid rgba(255,255,255,0.2);
-		min-height: 25px;
-		margin-top: -25px;
+		height: 25px;
+		width: 90%;
+		line-height: 25px;
+		padding-top: 0;
+		top: 0;
 	}
 
 	/* Highlight */
@@ -636,7 +648,7 @@
 /********************* BetterDiscord Minimal Mode support **********************/
 
 	.bd-minimal .guilds-wrapper { width: 45px !important; }
-
+	.bd-minimal #bd-pub-button { line-height: 20px !important; }
 	.bd-minimal .guilds .friends-icon {
 		top: 0;
 		left: 0;
@@ -657,41 +669,24 @@
 		margin-left: -5px;
 	}
 
-	.bd-minimal .guilds li.active.unread .guild-inner:before {
-		left: -45px;
-		padding-right: 18px;
-	}
-
-	.bd-minimal .guilds li.active.unread:hover .guild-inner:before { left: -31px; }
-
 	.bd-minimal .guilds li.active .guild-inner:before,
 	.bd-minimal .guilds li:hover .guild-inner:before {
 		height: 24px !important;
 		width: 20px !important;
-		margin-top: -10px !important;
-		left: -32px;
-		top: 8px;
+		left: -65px !important;
+		top: 0;
+		margin-top: 0;
 	}
 
-	.bd-minimal .guilds li.unread .guild-inner:before {	line-height: 24px !important; }
+	/* Unread messages icon */
+	.guilds li.unread:not(.active) .guild-inner:after { top: -10px; }
 
-	.bd-minimal .guilds li.unread:hover .guild-inner:before {
-	    padding-left: 16px;
-	    padding-right: 19px;
-	}
-
-	.bd-minimal .guilds li.active .guild-inner:after,
-	.bd-minimal .guilds li:hover .guild-inner:after {
-		height: 24px !important;
-		width: 24px !important;
-		top: 8px;
-		margin-top: -10px !important;
-	}
-
+	.bd-minimal .theme-dark .comment { border-left: none; }
 
 	.bd-minimal .channel-members-wrap { width: 80px; }
 	.bd-minimal .channel-members { width: 80px; }
 	.bd-minimal .channel-members .member { padding: 0; }
+	.bd-minimal .channel-members .member .member-inner { padding: 1px 8px; }
 
 	/* User list online status indicator */
 	.bd-minimal .channel-members .avatar-small .status { top: 11px !important; }
@@ -699,6 +694,20 @@
 	.bd-minimal .account .username { display: block; }
 
 	.bd-minimal .channel-members .avatar-small .status-typing {	width: 17px !important;	}
+
+
+
+/********************************* Other BetterDiscord overwrites *********************************/
+
+	/* BetterDiscord Public servers button */
+	#bd-pub-button { line-height: 35px !important; }
+
+	#bd-ps-header { height: 40px; }
+	#bd-ps-header h2, #bd-ps-header span { line-height: 40px; }
+
+	#bd-ps-body { top: 41px; }
+	#bd-ps-body table tr, #bd-ps-body table th { height: 40px; }
+	#bd-ps-body tr td button { margin-top: 1px !important; }
 
 
 /********************************* Responsive *********************************/
