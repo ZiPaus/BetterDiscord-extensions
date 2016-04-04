@@ -5,8 +5,9 @@ Requires [BetterDiscordApp](https://github.com/Jiiks/BetterDiscordApp)
 ## Themes
 All themes go under %AppData%/BetterDiscord/themes  
 ### [Toit'](https://github.com/kettui/BetterDiscord-extensions/blob/master/themes/toit.css)
-A dark, compact layout
-![Dark & Compact](https://gyazo.com/0f51063ba855b7125e3f3a7d147741f8.png)  
+A dark, compact layout  
+
+![Dark & Compact](http://i.imgur.com/030djNR.png)  
 
 ## Plugins
 All plugins go under %AppData%/BetterDiscord/plugins
