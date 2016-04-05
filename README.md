@@ -4,10 +4,13 @@ Requires [BetterDiscordApp](https://github.com/Jiiks/BetterDiscordApp)
 
 ## Themes
 All themes go under %AppData%/BetterDiscord/themes  
-### [Toit'](https://github.com/kettui/BetterDiscord-extensions/blob/master/themes/toit.css)
-A dark, compact layout  
+### [Clean & Compact](https://github.com/kettui/BetterDiscord-extensions/blob/master/themes/clean-compact.css)
+A dark, compact layout for those who like to save some space 
 
-![Dark & Compact](http://i.imgur.com/030djNR.png)  
+![Clean & Compact](http://imgur.com/pSt2CJK.png)  
+
+- Can be used with various settings (Cozy, compact mode, light or dark, BD minimal mode etc.)
+- Optimized for dark theme and compact message display
 
 ## Plugins
 All plugins go under %AppData%/BetterDiscord/plugins
