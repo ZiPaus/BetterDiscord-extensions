@@ -10,12 +10,14 @@
     Changelog
     ---------
     v1.0 (April 3rd 2016): Initial version
+    v1.1 (April 5th 2016): Added initial settings (choose which buttons to show, modify button color)
  */
 
+var tssettings = {};
 var containers = [
-    { label: 'Server list', className: 'guilds-wrapper', position: 'right', enabled: true},
-    { label: 'Channel list', className: 'channels-wrap', position: 'right', enabled: true},
-    { label: 'User list', className: 'channel-members-wrap', position: 'left', enabled: false}
+    { label: 'Server list', className: 'guilds-wrapper', position: 'right', enabled: null},
+    { label: 'Channel list', className: 'channels-wrap', position: 'right', enabled: null},
+    { label: 'User list', className: 'channel-members-wrap', position: 'left', enabled: null}
 ];
 
 function ToggleSections() {}
@@ -25,6 +27,13 @@ ToggleSections.prototype.load = function() {};
 ToggleSections.prototype.unload = function() {};
 
 ToggleSections.prototype.start = function() {
+    if(!localStorage.getItem("tssettings")) localStorage.setItem("tssettings", JSON.stringify({
+        enabled: [true, true, true],
+        color: null
+    }));
+
+    tssettings = JSON.parse(localStorage.getItem("tssettings"));
+
     this.onSwitch();
     this.addStyling();
 };
@@ -32,8 +41,8 @@ ToggleSections.prototype.start = function() {
 ToggleSections.prototype.onSwitch = function() {
     var self = this;
 
-    containers.forEach(function(container) {
-        var elem = $("."+ container.className);
+    containers.forEach(function(container, i) {
+        container.enabled = tssettings.enabled[i];
         self.attachHandler(container);
     });
 };
@@ -51,11 +60,11 @@ ToggleSections.prototype.getName = function() {
 };
 
 ToggleSections.prototype.getDescription = function() {
-	return "Allows you to hide sections of the program";
+	return "Allows you to hide sections of the program (check settings to modify)";
 };
 
 ToggleSections.prototype.getVersion = function() {
-	return "1.0";
+	return "1.1";
 };
 
 ToggleSections.prototype.getAuthor = function() {
@@ -66,9 +75,7 @@ ToggleSections.prototype.attachHandler = function(container) {
     var section = $("."+container.className),
         initialWidth,
         buttonExists = $("#toggle-"+ container.className).length > 0;
-        console.log(buttonExists, container.enabled);
     if(buttonExists && !container.enabled) {
-        console.log("sup");
         $("#toggle-"+ container.className).unbind("click");
         $("#toggle-"+ container.className).remove();
         return;
@@ -91,40 +98,47 @@ ToggleSections.prototype.attachHandler = function(container) {
 
 	// bind handlers
 	btn.bind("click", this.handleClick);
+    $('.toggle-section').css({
+        'border-color': 'transparent '+ tssettings.color
+    });
 }
 
 
 ToggleSections.prototype.addStyling = function() {
     var css = [
         '.channel-members-wrap { min-width: 0; }',
+
         '.toggleable.closed { overflow: visible !important; }',
+
     	'.toggle-section {',
     		'position: absolute;',
     		'bottom: 0;',
             'z-index: 6;',
             'cursor: pointer;',
     		'opacity: 1 !important;',
-    		'border-top: 10px solid transparent;',
-    		'border-bottom: 10px solid transparent;',
+            'border-width: 10px 0;',
+    		'border-style: solid;',
+            'border-color: transparent #3c3c3c;',
     	'}',
 
-    	'.toggle-section:hover {	border-left-color: rgb(90, 90, 90) !important; border-right-color: rgb(90, 90, 90) !important; }',
+        '.toggle-section:hover { border-color: transparent #5a5a5a; }',
 
-    	'.toggle-section.right {	right: 0; border-right: 10px solid rgb(60, 60, 60);	}',
+    	'.toggle-section.right { right: 0; border-right-width: 10px; }',
+
     	'.toggleable.closed .toggle-section.right {',
     		'right: -10px;',
-    		'border-left: 10px solid rgb(60, 60, 60);',
-    		'border-right: none;',
+    		'border-left-width: 10px;',
+    		'border-right-width: 0;',
     	'}',
 
-    	'.toggle-section.left { left: 0;	border-left: 10px solid rgb(60, 60, 60); }',
+    	'.toggle-section.left { left: 0; border-left-width: 10px }',
+
     	'.toggleable.closed .toggle-section.left {',
     		'left: -10px;',
-    		'border-right: 10px solid rgb(60, 60, 60);',
-    		'border-left: none;',
+    		'border-right-width: 10px;',
+    		'border-left-width: 0;',
     	'}',
 
-    	'#toggle-channel-members-wrap { background: rgb(40,40,40); }',
     	'.channel-members-wrap.closed .toggle-section { left: -30px; }'
     ];
 
@@ -144,27 +158,53 @@ ToggleSections.prototype.addStyling = function() {
 
 ToggleSections.prototype.getSettingsPanel = function () {
     var settingsContainer = $('<div/>', { id: "ts-settings" });
+    var colorPicker = $("<input/>", {
+        type: "color",
+        class: "swatch default",
+        id: "color-picker"
+    });
+    colorPicker.prop("value", tssettings.color);
 
     for (var i = 0; i < containers.length; i++) {
         var container = containers[i];
 
-        container.enabled
-            ? settingsContainer.append('<input type="checkbox" onclick="ToggleSections.prototype.handleCheckbox.call(this, '+i+')" id="ts-'+container.className+'" checked /> <span>'+ container.label +'</span> <br/>')
-            : settingsContainer.append('<input type="checkbox" onclick="ToggleSections.prototype.handleCheckbox.call(this, '+i+')" id="ts-'+container.className+'" /> <span>'+ container.label +'</span> <br/>')
+        var checkbox = $('<input />', {
+            type: 'checkbox',
+            'data-i': i,
+            id: 'ts-'+ container.className,
+            checked: container.enabled ? true : false,
+            click: function() {
+                var elem = $(this),
+                    isChecked = elem.attr("checked"),
+                    u = parseInt(elem.attr('data-i'));
+
+                isChecked ? elem.prop("checked", false) : elem.prop("checked", true);
+                containers[u].enabled = containers[u].enabled ? false : true;
+
+                tssettings.enabled[u] = containers[u].enabled;
+                localStorage.setItem("tssettings", JSON.stringify(tssettings));
+
+                ToggleSections.prototype.onSwitch();
+            }
+        });
+
+        var checkboxLabel = $('<span />', {
+            text: container.label
+        });
+
+        settingsContainer.append(checkbox, checkboxLabel, '<br/>');
     }
 
+    settingsContainer.append('<span>Button color:</span>', colorPicker);
+
+    colorPicker.on("change", function() {
+        var newColor = $(this).prop("value");
+        $('.toggle-section').css({
+            'border-color': 'transparent '+ newColor
+        });
+        tssettings.color = newColor;
+        localStorage.setItem("tssettings", JSON.stringify(tssettings));
+    })
 
     return settingsContainer;
 };
-
-ToggleSections.prototype.handleCheckbox = function(i) {
-    var elem = $(this),
-        isChecked = elem.attr("checked");
-
-    isChecked ? elem.removeAttr("checked") : elem.attr("checked", "checked");
-    console.log(containers[i].enabled);
-    containers[i].enabled = containers[i].enabled ? false : true;
-    console.log(containers);
-
-    ToggleSections.prototype.onSwitch();
-}
