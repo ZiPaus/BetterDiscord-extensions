@@ -448,7 +448,8 @@
 
 	.chat .divider > div { background: #474a4f; }
 	.messages-wrapper .messages .divider:not(.red) span { border-radius: 3px; }
-	.messages-wrapper .messages .message-group .comment .markup pre code { background: rgba(255,255,255,0.05) !important; }
+	.message-group .markup pre { display: inline-block; }
+	.message-group .markup pre code { background: rgba(255,255,255,0.05) !important; }
 	.messages-wrapper .messages .embed { border-color: rgba(242, 242, 242, 0.1) !important; }
 
 	/* Messages from blocked people */
@@ -722,18 +723,3 @@
 	#bd-ps-body { top: 41px; }
 	#bd-ps-body table tr, #bd-ps-body table th { height: 40px; }
 	#bd-ps-body tr td button { margin-top: 1px !important; }
-
-
-/********************************* Responsive *********************************/
-
-
-	/* Collapse side sections on small width */
-	/*@media (max-width: 768px) {
-		.guilds-wrapper { width: 15px !important; overflow-x: hidden; }
-		.channels-wrap { width: 15px !important; overflow-x: hidden; }
-		.channel-members, .channel-members-wrap { width: 15px !important; overflow-x: hidden; }
-
-		.guilds-wrapper:hover { width: 60px !important; }
-		.channels-wrap:hover { width: 128px !important; }
-		.channel-members:hover, .channel-members-wrap:hover { width: 105px !important; }
-	}*/
