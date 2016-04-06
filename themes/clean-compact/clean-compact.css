@@ -1,4 +1,4 @@
-//META{"name":"Clean & Compact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.5.2"}*//
+//META{"name":"Clean & Compact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.5.3"}*//
 
 /*
     Installation
@@ -128,6 +128,7 @@
 		overflow-x: hidden;
 	}
 
+	#bd-pub-li .guild-inner a { border-color: transparent !important; }
 	.guilds .friends-online { font-size: 9px !important; }
 	.guilds li .badge { z-index: 3; }
 
@@ -171,9 +172,8 @@
 		overflow: visible;
 	}
 
-	.guilds li.guilds-separator {
-		height: 2px !important;
-	}
+	.guilds li.guilds-separator { height: 2px !important; }
+	.guilds li.guilds-separator::after { background: rgba(115,139,215,0.4); }
 
 	.guilds-add {
 		font-size: 25px !important;
@@ -181,12 +181,12 @@
 		margin: 5px 0 0 2px;
 	}
 
-	.guilds li.audio .guild-inner:after {
+	.guilds li.audio .guild-inner::after {
 		width: 18px;
 	    height: 18px;
 	}
 
-	.guilds li .guild-inner:before {
+	.guilds li .guild-inner::before {
 	    content: " ";
 	    position: absolute;
 	    height: 42px !important;
@@ -201,7 +201,7 @@
 		transition: left 250ms; transition: padding 250ms;
 	}
 
-	.guilds li:hover .guild-inner:before {
+	.guilds li:hover .guild-inner::before {
 		left: -45px !important;
 		padding-right: 42px;
 		margin-top: 0;
@@ -210,7 +210,7 @@
 	}
 
 	.guilds li.active .guild-inner a { border-color: #E2E2E2; }
-	.guilds li.active .guild-inner:before {
+	.guilds li.active .guild-inner::before {
 		left: -45px !important;
 		padding-right: 41px;
 		border-radius: 0 20px 20px 0;
@@ -218,7 +218,7 @@
 		transition: background 350ms;
 	}
 
-	.guilds li.unread:not(.active) .guild-inner:after {
+	.guilds li.unread:not(.active) .guild-inner::after {
 		content: "💬";
 		position: absolute;
 		z-index: 1;
@@ -228,12 +228,14 @@
 		background: none !important;
 		width: initial;
 		height: initial;
+		animation-name: zoomAppear;
+		animation-duration: .2s;
+		animation-iteration-count: 1;
+		animation-timing-function: ease-in-out;
 	}
 
 	/* Help button @ bottom left corner */
-	.help-container:after {	background: none; }
-
-	.private-channels .channel { padding-left: 10px; }
+	.help-container::after { background: none; }
 
 
 /************************* Text/voice channel section *************************/
@@ -272,12 +274,19 @@
 	}
 	.private-channels .search-bar { height: 54px; }
 
+	.guild-channels ul .channel-text .channel-name:before { color: #738bd7 !important; }
+	.guild-channels ul .channel-text .badge {
+		margin-left: -15px;
+		position: absolute;
+		right: 22px;
+	}
+
 	.guild-channels ul .channel-text a {
 		padding: 5px;
 	    box-sizing: border-box;
 	}
 
-	.guild-channels ul .channel-text.unread:not(.selected):not(.channel-muted):before {
+	.guild-channels ul .channel-text.unread:not(.selected):not(.channel-muted)::before {
 		top: 7px;
 		left: -7px;
 	}
@@ -299,7 +308,7 @@
 		margin: 15px 0;
 	}
 
-	.guild-channels ul .channel-text.unread:not(.selected):not(.channel-muted):before {
+	.guild-channels ul .channel-text.unread:not(.selected):not(.channel-muted)::before {
 		content: "💬";
 		background: none;
 		width: 0;
@@ -310,6 +319,10 @@
 		left: initial;
 		right: 13px;
 		top: 6px;
+		animation-name: zoomAppear;
+		animation-duration: .2s;
+		animation-iteration-count: 1;
+		animation-timing-function: ease-in-out;
 	}
 
 	#voice-connection { padding: 5px 7px; }
@@ -469,7 +482,7 @@
 	}
 
 	/* to avoid clipping */
-	.emotewrapper:before {
+	.emotewrapper::before {
 	    content: "";
 	    display: block;
 	    width: 28px;
@@ -484,7 +497,7 @@
 		max-height: 25px;
 	}
 
-	.spoiler:before {
+	.spoiler::before {
 		position: absolute;
 		background: rgba(0,0,0,0.7);
 		border-radius: 6px;
@@ -526,7 +539,13 @@
 	}
 
 	/* Channel's user list group labels */
-	.channel-members h2 { width: 100%;, letter-spacing: .001em; }
+	.channel-members h2 {
+		padding: 0 10px 5px 3px;
+		width: 100%;
+		letter-spacing: .001em;
+	    border-bottom: 1px solid rgba(115,139,215,0.4);
+	    margin-left: 7px;
+	}
 	.channel-members .member .member-game strong { white-space: normal; }
 	.channel-members .member .member-game strong span {
 		font-size: 10px !important;
@@ -556,13 +575,6 @@
 	    box-sizing: border-box;
 	}
 
-	.channel-members h2 {
-		padding: 0 10px 5px 3px;
-		width: 100%;
-	    border-bottom: 1px solid #1c1e22;
-	    margin-left: 7px;
-	}
-
 	.channel-members .member + h2 {
 		margin-top: 20px;
 	}
@@ -590,8 +602,8 @@
 		padding: 0 0 0 5px;
 	}
 
-	.channel-members .member.member-status-offline:before,
-	.channel-members .member.member-status-offline:after { display: none !important; }
+	.channel-members .member.member-status-offline::before,
+	.channel-members .member.member-status-offline::after { display: none !important; }
 
 	.channel-members .member.member-status-offline .avatar-small {
 		height: 0;
@@ -630,6 +642,9 @@
 		padding: 0 0;
 		margin-left: 30px !important;
 	}
+
+	.private-channels .channel { padding-left: 10px; }
+	.private-channels .channel a { padding-left: 0; }
 
 	.friends-table .messages .message-group.compact .user-name,
 	.messages-wrapper .messages .message-group.compact .user-name {
@@ -684,8 +699,8 @@
 		margin-left: -5px;
 	}
 
-	.bd-minimal .guilds li.active .guild-inner:before,
-	.bd-minimal .guilds li:hover .guild-inner:before {
+	.bd-minimal .guilds li.active .guild-inner::before,
+	.bd-minimal .guilds li:hover .guild-inner::before {
 		height: 24px !important;
 		width: 20px !important;
 		left: -65px !important;
@@ -694,7 +709,7 @@
 	}
 
 	/* Unread messages icon */
-	.guilds li.unread:not(.active) .guild-inner:after { top: -10px; }
+	.guilds li.unread:not(.active) .guild-inner::after { top: -10px; }
 
 	.bd-minimal .theme-dark .comment { border-left: none; }
 
@@ -723,3 +738,12 @@
 	#bd-ps-body { top: 41px; }
 	#bd-ps-body table tr, #bd-ps-body table th { height: 40px; }
 	#bd-ps-body tr td button { margin-top: 1px !important; }
+
+
+/****************************************** Animations *****************************************/
+
+@-webkit-keyframes zoomAppear {
+    0% 		{ transform: scale(0); }
+    /*75% 	{ transform: scale(1.4); }*/
+    100% 	{ transform: scale(1); }
+}
