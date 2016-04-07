@@ -12,20 +12,35 @@
     v1.0 (April 3rd 2016): Initial version
     v1.1 (April 5th 2016): Added initial settings (choose which buttons to show, modify button color)
     v1.2 (April 6th 2016): Improved settings, bug fixes
+    v1.3 (April 7th 2016): Refactoring
  */
+
+ToggleSections = (function() {
 
 var tssettings = {};
 var containers = [
-    { label: 'Server list', className: 'guilds-wrapper', position: 'right', enabled: null, closed: null },
-    { label: 'Channel list', className: 'channels-wrap', position: 'right', enabled: null, closed: null },
-    { label: 'User list', className: 'channel-members-wrap', position: 'left', enabled: null, closed: null }
+    { label: 'Server list', className: 'guilds-wrapper', position: 'right' },
+    { label: 'Channel list', className: 'channels-wrap', position: 'right' },
+    { label: 'User list', className: 'channel-members-wrap', position: 'left' }
 ];
 
 function ToggleSections() {}
 
+ToggleSections.prototype.getName = function() {
+    return "Toggle Sections";
+};
+ToggleSections.prototype.getDescription = function() {
+    return "Allows you to hide sections of the program (check settings to modify)";
+};
+ToggleSections.prototype.getVersion = function() {
+    return "1.3";
+};
+ToggleSections.prototype.getAuthor = function() {
+    return "kettui /Cin";
+};
 ToggleSections.prototype.load = function() {};
-
 ToggleSections.prototype.unload = function() {};
+ToggleSections.prototype.onMessage = function() {};
 
 ToggleSections.prototype.start = function() {
     if(!localStorage.getItem("tssettings")) localStorage.setItem("tssettings", JSON.stringify({
@@ -44,77 +59,57 @@ ToggleSections.prototype.onSwitch = function() {
     var self = this;
 
     containers.forEach(function(container, i) {
-        container.enabled = tssettings.enabled[i];
-        container.closed = tssettings.closed[i];
         self.attachHandler(container, i);
     });
+};
+
+ToggleSections.prototype.observer = function (e) {
+    if(e.target.classList.contains('toggleable')) this.onSwitch();
 };
 
 ToggleSections.prototype.stop = function() {
     $("#toggle-sections").remove();
     for (var i = 0; i < containers.length; i++) {
-        $('#toggle-'+ containers[i].className).unbind("click");
+        $('#toggle-'+ containers[i].className).off("click.ts");
         $('#toggle-'+ containers[i].className).remove();
     }
 };
 
-ToggleSections.prototype.getName = function() {
-	return "Toggle Sections";
-};
-
-ToggleSections.prototype.getDescription = function() {
-	return "Allows you to hide sections of the program (check settings to modify)";
-};
-
-ToggleSections.prototype.getVersion = function() {
-	return "1.1";
-};
-
-ToggleSections.prototype.getAuthor = function() {
-	return "kettui";
-};
-
 ToggleSections.prototype.attachHandler = function(container, i) {
     var section = $("."+container.className),
-        initialWidth,
         self = this,
         buttonExists = $("#toggle-"+ container.className).length > 0;
-    if(buttonExists && !container.enabled) {
-        $("#toggle-"+ container.className).unbind("click");
+    if(buttonExists && !tssettings.enabled[i]) {
+        $("#toggle-"+ container.className).off("click.ts");
         $("#toggle-"+ container.className).remove();
         return;
     }
 
-    if(buttonExists || !container.enabled) return;
+    if(buttonExists || !tssettings.enabled[i]) return;
 
     section.append('<div class="toggle-section '+ container.position +'" id="toggle-'+ container.className +'"></div>');
     section.addClass("toggleable");
 
     var btn = $('#toggle-'+ container.className +'');
 
+    var toggleSection = function() {
+        tssettings.closed[i] ? section.addClass("closed") : section.removeClass("closed");
+    };
+
     var handleClick = function() {
-        section.toggleClass("closed");
-        var isClosed = container.closed ? false : true;
-        container.closed = isClosed;
+        var isClosed = tssettings.closed[i] ? false : true;
         tssettings.closed[i] = isClosed;
         self.updateSettings();
         toggleSection();
     };
 
-    var toggleSection = function() {
-        if(!initialWidth) initialWidth = section.width();
-        var isClosed = container.closed;
-        var sectionWidth = isClosed ? 0 : initialWidth;
+    if(tssettings.closed[i]) toggleSection();
 
-        isClosed ? section.addClass("closed") : section.removeClass("closed");
-    };
-
-    if(container.closed) toggleSection();
-
-	btn.bind("click", handleClick);
     $('.toggle-section').css({
         'border-color': 'transparent '+ tssettings.color
     });
+
+    btn.on("click.ts", handleClick);
 }
 
 
@@ -190,18 +185,16 @@ ToggleSections.prototype.getSettingsPanel = function () {
             type: 'checkbox',
             'data-i': i,
             id: 'ts-'+ container.className,
-            checked: container.enabled ? true : false,
+            checked: tssettings.enabled[i] ? true : false,
             click: function() {
                 var elem = $(this),
                     isChecked = elem.attr("checked"),
                     u = parseInt(elem.attr('data-i'));
 
                 isChecked ? elem.prop("checked", false) : elem.prop("checked", true);
-                containers[u].enabled = containers[u].enabled ? false : true;
+                tssettings.enabled[u] = tssettings.enabled[u] ? false : true;
 
-                tssettings.enabled[u] = containers[u].enabled;
-                localStorage.setItem("tssettings", JSON.stringify(tssettings));
-
+                ToggleSections.prototype.updateSettings();
                 ToggleSections.prototype.onSwitch();
             }
         });
@@ -228,3 +221,7 @@ ToggleSections.prototype.getSettingsPanel = function () {
 ToggleSections.prototype.updateSettings = function() {
     localStorage.setItem("tssettings", JSON.stringify(tssettings));
 };
+
+return ToggleSections;
+
+})();
