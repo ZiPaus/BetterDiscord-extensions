@@ -1,5 +1,5 @@
 # BetterDiscordApp extensions
-A collection of some of my BetterDiscord extensions (themes, plugins)  
+A collection of some of my BetterDiscord extensions (themes, plugins)   
 Requires [BetterDiscordApp](https://github.com/Jiiks/BetterDiscordApp)
 
 ## Themes
