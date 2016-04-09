@@ -1,4 +1,4 @@
-//META{"name":"Clean & Compact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.5.3"}*//
+//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.5.3"}*//
 
 /*
     Installation
@@ -10,6 +10,7 @@
     Changelog
     ---------
     v1.5.0 (April 3rd 2016): Initial release
+	v1.5.x: Bug fixes, small improvements all-around
  */
 
 
@@ -86,7 +87,7 @@
 
 	/* Channel user list */
 	.channel-members { background: rgba(0,0,0,0.80) !important; }
-	.guild-header ul { opacity: 0; }
+	.guild-header ul { opacity: 0; top: 54px; }
 
 	/* Channel, user etc. hover effect */
 	.private-channels .channel:hover,
@@ -129,7 +130,6 @@
 	}
 
 	#bd-pub-li .guild-inner a { border-color: transparent !important; }
-	.guilds .friends-online { font-size: 9px !important; }
 	.guilds li .badge { z-index: 3; }
 
 	.guilds li .avatar-small {
@@ -138,10 +138,12 @@
 
 	/* Server buttons */
 	.guilds .friends-online {
+		font-size: 9px !important;
 		width: 35px !important;
 		height: 25px !important;
 		line-height: 25px;
 		white-space: nowrap;
+		margin: 5px 0;
 	}
 	.guilds li { width: 35px !important; height: 35px !important; background-size: 35px 35px !important; }
 	.guilds li .avatar-small { width: 35px !important; height: 35px !important; background-size: 35px 35px !important; }
@@ -172,7 +174,7 @@
 		overflow: visible;
 	}
 
-	.guilds li.guilds-separator { height: 2px !important; }
+	.guilds li.guilds-separator { height: 8px !important; }
 	.guilds li.guilds-separator::after { background: rgba(115,139,215,0.4); }
 
 	.guilds-add {
@@ -416,16 +418,19 @@
 		padding: 3px 0;
 		margin-left: 15px;
 		border-bottom: none;
+		overflow: hidden;
 	}
 
 	.message-group .message { position: relative; }
 	.message-group.compact .comment .markup { padding-left: 90px; }
+	.message-group.compact .bot-tag { margin: 0; line-height: 22px; }
 	.message-group .comment .markup {
 		min-height: 25px;
 	    line-height: 25px;
 	    margin-top: 3px;
 		color: rgba(255, 255, 255, 0.7);
 	}
+	.message-group .message .markup a { white-space: pre; }
 
 	.message-group .avatar-large {
 		margin-top: 0;
@@ -439,10 +444,18 @@
 	.message .btn-option { position: relative; z-index: 3 !important; }
 
 	/* Twitch emote menu icons */
-	#twitchcord-button-container { bottom: 31px; }
-	#twitchcord-button { background-image: url(https://static-cdn.jtvnw.net/emoticons/v1/81249/1.0); }
-	#twitchcord-button.twitchcord-button-open {
+	#twitchcord-button-container { bottom: 31px; right: 31px; }
+	#twitchcord-button {
+		background-image: url(https://static-cdn.jtvnw.net/emoticons/v1/81249/1.0);
+		transform: scale(0.8);
+		opacity: 0.2;
+		transition: all 250ms;
+	}
+	#twitchcord-button.twitchcord-button-open,
+	#twitchcord-button:hover {
 		background-image: url(https://static-cdn.jtvnw.net/emoticons/v1/81248/1.0) !important;
+		transform: scale(1) !important;
+		opacity: 1;
 	}
 
 	/* Expanded description */
@@ -452,6 +465,35 @@
 		box-shadow: none;
 	}
 
+	.chat .title-wrap .header-toolbar { position: relative; }
+
+	.chat .title-wrap .header-toolbar button {
+		background: transparent;
+		width: 25px;
+		height: 25px;
+		margin-top: 5px;
+	}
+
+	.chat .header-toolbar button:first-of-type {
+		margin-right: 7px;
+	}
+
+	.chat .header-toolbar button:first-of-type:after {
+	    content: " ";
+	    border-right: 1px solid hsla(0,0%,85%,.1);
+	    position: absolute;
+	    width: 1px;
+	    height: 75%;
+	    left: 30px;
+	    top: 4px;
+	}
+
+	.chat .title-wrap .header-toolbar button span {
+		width: 25px;
+		height: 25px;
+		background-size: 23px;
+	}
+
 	/* Chat @mention highlight */
 	.message-group .mentioned .message-text {
 		border-radius: 2px;
@@ -459,6 +501,7 @@
 		border-width: 0 4px 0 0;
 	}
 
+	.chat .divider { height: 10px !important; }
 	.chat .divider > div { background: #474a4f; }
 	.messages-wrapper .messages .divider:not(.red) span { border-radius: 3px; }
 	.message-group .markup pre { display: inline-block; }
@@ -481,9 +524,11 @@
 		max-height: 28px;
 	}
 
+	.emotewrapper { line-height: 8px; }
+
 	/* to avoid clipping */
 	.emotewrapper::before {
-	    content: "";
+	    content: " ";
 	    display: block;
 	    width: 28px;
 	}
@@ -503,9 +548,15 @@
 		border-radius: 6px;
 		border: 1px solid rgba(255,255,255,0.2);
 		height: 25px;
-		width: 90%;
+		min-height: 25px;
+		width: 100%;
 		line-height: 25px;
 		padding-top: 0;
+		top: 15px;
+	}
+
+	.compact .spoiler:before {
+		width: 86%;
 		top: 0;
 	}
 
@@ -540,12 +591,39 @@
 
 	/* Channel's user list group labels */
 	.channel-members h2 {
-		padding: 0 10px 5px 3px;
-		width: 100%;
+		position: relative;
+		padding: 0 15px 2px 0;
+		width: 55px;
 		letter-spacing: .001em;
-	    border-bottom: 1px solid rgba(115,139,215,0.4);
-	    margin-left: 7px;
+	    border-bottom: 2px solid #738bd7;
+	    margin-left: 5px;
 	}
+
+	.channel-members h2 span:nth-of-type(1) {
+	    display: inline-flex;
+	    white-space: nowrap;
+	}
+	.channel-members h2:hover span:nth-of-type(1) {
+		white-space: normal;
+	}
+	.channel-members span:nth-of-type(2) { display: none; }
+	.channel-members h2 span:nth-of-type(3) {
+	    position: absolute;
+	    right: -16px;
+	    bottom: -2px;
+	    border-radius: 7px 0;
+	    background: #738BD7;
+	    padding: 5px;
+	    height: 7px;
+	    min-width: 7px;
+	    line-height: 7px;
+	    color: #fff;
+	    display: inline-flex;
+	    justify-content: center;
+		opacity: 1;
+		transition: opacity 150ms;
+	}
+
 	.channel-members .member .member-game strong { white-space: normal; }
 	.channel-members .member .member-game strong span {
 		font-size: 10px !important;
@@ -564,16 +642,18 @@
 		color: hsla(0,0%,100%,.9) !important;
 		padding: 0 0 0 3px;
 		box-sizing: border-box;
-		margin-bottom: 5px;
+		margin-bottom: 3px;
 		border-bottom: 1px solid rgba(0,0,0,0.14);
 		position: relative;
 	}
 
 	.channel-members .member .member-inner {
 		width: 73px;
-	    padding: 5px 8px;
+	    padding: 0 0 0 8px;
 	    box-sizing: border-box;
 	}
+
+	.member-username[style*="color:#010000"] { color: #fff !important; }
 
 	.channel-members .member + h2 {
 		margin-top: 20px;
@@ -645,6 +725,22 @@
 
 	.private-channels .channel { padding-left: 10px; }
 	.private-channels .channel a { padding-left: 0; }
+	.private-channels .channel a .avatar-small {
+		width: 25px;
+		height: 25px;
+		background-size: 25px;
+		border-radius: 50%;
+		margin-right: 8px;
+	}
+	.private-channels .channel a .channel-game {
+		white-space: normal;
+		overflow: initial;
+		text-overflow: initial;
+	}
+	.private-channels .channel a .channel-game > span { display: none !important; }
+	.private-channels .channel a .channel-name { max-height: 25px; transition: all 150ms; }
+	.private-channels .channel a:hover .channel-name { max-height: 150px !important; }
+	.private-channels .channel a .channel-game strong span { font-size: 9px !important; }
 
 	.friends-table .messages .message-group.compact .user-name,
 	.messages-wrapper .messages .message-group.compact .user-name {
@@ -672,6 +768,25 @@
 
 	.channel-notification-settings .flex-spacer {
 		background: initial !important;
+	}
+
+
+/***************************** Modal (channel description) **************************/
+
+	/* Header */
+	.markdown-modal .markdown-modal-header {
+	    margin: 0;
+	    padding: 16px;
+	}
+
+	/* Close btn */
+	.markdown-modal .markdown-modal-header .markdown-modal-close {
+	    top: 40%;
+	}
+
+	/* Content */
+	.markdown-modal .scroller-wrap .scroller {
+	    padding: 16px 16px 32px;
 	}
 
 
