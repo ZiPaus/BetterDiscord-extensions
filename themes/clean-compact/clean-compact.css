@@ -1,4 +1,4 @@
-//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.5.3"}*//
+//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.5.4"}*//
 
 /*
     Installation
@@ -11,6 +11,7 @@
     ---------
     v1.5.0 (April 3rd 2016): Initial release
 	v1.5.x: Bug fixes, small improvements all-around
+	v1.5.4: Changed bg image
  */
 
 
@@ -30,10 +31,13 @@
 
 	/* Background image */
 	.app {
-		background: url(https://i.imgur.com/Q4jids7.jpg);
+		background: url(https://i.imgur.com/38O9SOp.jpg);
 		background-size: cover !important;
-	    background-position: 50% 50% !important;
+	    /*background-position: 50% 50% !important;*/
 	}
+
+	/* Adds a black background to the bottom 100px */
+	.app > .flex-spacer { background: linear-gradient(to top, #000, transparent 100px) !important; }
 
 	/**
 	 * Background colors
@@ -46,7 +50,6 @@
 	.content,
 	.guild-channels,
 	.private-channels,
-	.guild-header header,
 	.divider-red span,
 	.messages-wrapper,
 	#voice-connection,
@@ -74,7 +77,7 @@
 
 	/* Chat section header, server list */
 	.guilds-wrapper,
-	.chat .title-wrap { background:rgba(0,0,0,0.78) !important }
+	.chat .title-wrap { background:rgba(0,0,0,0.8) !important }
 
 	/* Text / voice channels, friends tab content area */
 	.channels-wrap,
@@ -125,12 +128,19 @@
 	}
 	.guilds {
 		width: 60px;
-		padding: 18px 9px;
+		padding: 14px 9px;
 		overflow-x: hidden;
 	}
 
 	#bd-pub-li .guild-inner a { border-color: transparent !important; }
-	.guilds li .badge { z-index: 3; }
+	.guilds li .badge {
+	    z-index: 3;
+	    border-radius: 10px;
+	    font-size: 9px !important;
+	    padding: 0px 4px;
+	    right: -6px;
+	    bottom: -3px;
+	}
 
 	.guilds li .avatar-small {
 		z-index: 2;
@@ -138,14 +148,27 @@
 
 	/* Server buttons */
 	.guilds .friends-online {
-		font-size: 9px !important;
-		width: 35px !important;
-		height: 25px !important;
-		line-height: 25px;
+		font-size: 10px !important;
+		width: 13px !important;
+		height: 13px !important;
+		text-indent: 4px;
+		line-height: 13px;
 		white-space: nowrap;
 		margin: 5px 0;
+		position: absolute;
+		overflow: hidden;
+		top: 37px;
+		right: 8px;
+		background: #738BD7;
+		color: white;
+		border-radius: 50%;
+		letter-spacing: 2px;
+		opacity: 0.8;
+		border: 2px solid rgb(40, 40, 40);
+		z-index: 2;
 	}
 	.guilds li { width: 35px !important; height: 35px !important; background-size: 35px 35px !important; }
+	.guilds li:first-of-type:hover ~ .friends-online, .guilds li:first-of-type.active ~ .friends-online { opacity: 1; }
 	.guilds li .avatar-small { width: 35px !important; height: 35px !important; background-size: 35px 35px !important; }
 	.guilds li .guild-inner a {
 		width: 35px !important;
@@ -223,13 +246,14 @@
 	.guilds li.unread:not(.active) .guild-inner::after {
 		content: "💬";
 		position: absolute;
-		z-index: 1;
+		z-index: 2;
 		top: -15px !important;
-		right: -15px;
+		right: -6px;
 		color: white;
 		background: none !important;
 		width: initial;
 		height: initial;
+		text-shadow: 0 2px 0px black;
 		animation-name: zoomAppear;
 		animation-duration: .2s;
 		animation-iteration-count: 1;
@@ -269,7 +293,7 @@
 	    box-sizing: border-box;
 	}
 
-	.guild-header header { height: 54px; }
+	.guild-header header { height: 54px; background: rgba(0,0,0,0.4) !important; }
 	.guild-header header span {
 		white-space: normal;
 		line-height: 100%;
@@ -327,13 +351,36 @@
 		animation-timing-function: ease-in-out;
 	}
 
+	.channel-members .member .member-game > span,
+	#voice-connection .voice-connection-channel,
+	.ping {
+		display: none !important;
+	}
+
+	.guild-channels ul .channel-voice .channel-arrow {
+		margin-right: 2px;
+		margin-left: -5px;
+		display: none;
+	}
+
+	.guild-channels ul .channel-voice.audio .channel-arrow { display: block; }
+	.guild-channels ul .channel-voice.audio .channel-arrow:hover {
+		color: white;
+	}
+	.guild-header ul a { margin: 0; }
+	.guild-header.guild-header-open ul {
+		opacity: 1;
+	    background: rgba(0,0,0,0.98);
+	    border-bottom: 1px solid #1c1e22;
+	}
+
 	#voice-connection { padding: 5px 7px; }
 	#voice-connection .btn {
 		width: 22px;
 	    height: 22px;
 	}
 	.account {
-		height: 75px;
+		height: 48px;
 	    padding: 0 2px;
 	}
 	.account .avatar-small { margin-left: 5px; display: block !important; }
@@ -355,33 +402,6 @@
 	    height: 22px;
 	}
 
-	.channel-members .member .member-game > span,
-	#voice-connection .voice-connection-channel,
-	.ping {
-		display: none !important;
-	}
-
-	.guild-channels ul .channel-voice .channel-arrow {
-		margin-right: 2px;
-		margin-left: -5px;
-		display: none;
-	}
-
-	.guild-channels ul .channel-voice.audio .channel-arrow {
-		display: block;
-	}
-
-	.guild-channels ul .channel-voice.audio .channel-arrow:hover {
-		color: white;
-	}
-
-	.guild-header ul a { margin: 0; }
-	.guild-header.guild-header-open ul {
-		opacity: 1;
-	    background: rgba(0,0,0,0.98);
-	    border-bottom: 1px solid #1c1e22;
-	}
-
 	.account .btn-group,
 	#voice-connection .btn-group {
 		border: none;
@@ -392,7 +412,10 @@
 	    border-right: 0 !important;
 	}
 
-	.account { height: 48px; }
+	.account .account-details .discriminator { opacity: 0.5; }
+	.account .account-details .discriminator:hover { opacity: 1; }
+	.account .account-details .discriminator span:first-of-type { color: #738bd7; }
+
 	.links { padding: 75px 10px 20px; }
 
 
@@ -406,6 +429,7 @@
 		border-color: #1c1e22;
 	}
 	.chat .title-wrap .channel-name { color: #fff; }
+	.chat > .title-wrap > .title .channel-name::before { color: #738BD7; }
 
 	/* Message textarea */
 	.channel-textarea { margin: 10px 0 30px; }
@@ -422,7 +446,7 @@
 	}
 
 	.message-group .message { position: relative; }
-	.message-group.compact .comment .markup { padding-left: 90px; }
+	.message-group.compact .comment .markup { padding-left: 90px; text-indent: -93px; }
 	.message-group.compact .bot-tag { margin: 0; line-height: 22px; }
 	.message-group .comment .markup {
 		min-height: 25px;
@@ -443,19 +467,29 @@
 	.message-group.compact .accessory { padding-left: 60px; }
 	.message .btn-option { position: relative; z-index: 3 !important; }
 
-	/* Twitch emote menu icons */
-	#twitchcord-button-container { bottom: 31px; right: 31px; }
-	#twitchcord-button {
-		background-image: url(https://static-cdn.jtvnw.net/emoticons/v1/81249/1.0);
+	/* Emote menu */
+	.channel-textarea-emoji > .sprite-item {
+		background-image: url(https://static-cdn.jtvnw.net/emoticons/v1/81249/1.0) !important;
 		transform: scale(0.8);
-		opacity: 0.2;
-		transition: all 250ms;
+		opacity: 0.8;
+		transition: all 150ms;
+		width: 30px;
+		height: 30px;
+		background-size: 30px 30px !important;
+		background-position: initial !important;
 	}
-	#twitchcord-button.twitchcord-button-open,
-	#twitchcord-button:hover {
+	.channel-textarea-emoji.popout-open > .sprite-item,
+	.channel-textarea-emoji > .sprite-item:hover {
 		background-image: url(https://static-cdn.jtvnw.net/emoticons/v1/81248/1.0) !important;
 		transform: scale(1) !important;
 		opacity: 1;
+	}
+
+	/* Emoji */
+	.emoji {
+		height: 25px;
+		width: 25px;
+		line-height: 25px;
 	}
 
 	/* Expanded description */
@@ -593,11 +627,13 @@
 	.channel-members h2 {
 		position: relative;
 		padding: 0 15px 2px 0;
-		width: 55px;
+		width: 80px;
 		letter-spacing: .001em;
-	    border-bottom: 2px solid #738bd7;
+	    border-bottom: 1px solid #738bd7;
 	    margin-left: 5px;
+		transition: width 150ms;
 	}
+	.channel-members h2:hover { width: 55px; }
 
 	.channel-members h2 span:nth-of-type(1) {
 	    display: inline-flex;
@@ -609,8 +645,8 @@
 	.channel-members span:nth-of-type(2) { display: none; }
 	.channel-members h2 span:nth-of-type(3) {
 	    position: absolute;
-	    right: -16px;
-	    bottom: -2px;
+	    right: -35px;
+	    bottom: -1px;
 	    border-radius: 7px 0;
 	    background: #738BD7;
 	    padding: 5px;
@@ -621,8 +657,9 @@
 	    display: inline-flex;
 	    justify-content: center;
 		opacity: 1;
-		transition: opacity 150ms;
+		transition: all 150ms;
 	}
+	.channel-members h2:hover span:nth-of-type(3) { right: -16px; }
 
 	.channel-members .member .member-game strong { white-space: normal; }
 	.channel-members .member .member-game strong span {
