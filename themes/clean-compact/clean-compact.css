@@ -66,9 +66,6 @@
 	.account,
 	.account .btn,
 	#voice-connection .btn,
-	#friends .friends-header,
-	.private-channels .search-bar,
-	#twitchcord-button,
 	.help-container,
 	.messages-wrapper .messages .divider span {
 		background-color: transparent !important;
@@ -77,7 +74,9 @@
 
 	/* Chat section header, server list */
 	.guilds-wrapper,
-	.chat .title-wrap { background:rgba(0,0,0,0.8) !important }
+	.chat .title-wrap { background:rgba(0,0,0,0.8) !important; }
+
+	#friends .friends-header { background: rgba(0,0,0,0.55) !important; }
 
 	/* Text / voice channels, friends tab content area */
 	.channels-wrap,
@@ -253,7 +252,7 @@
 		background: none !important;
 		width: initial;
 		height: initial;
-		text-shadow: 0 2px 0px black;
+		text-shadow: -2px 4px 0px #000;
 		animation-name: zoomAppear;
 		animation-duration: .2s;
 		animation-iteration-count: 1;
@@ -293,12 +292,12 @@
 	    box-sizing: border-box;
 	}
 
-	.guild-header header { height: 54px; background: rgba(0,0,0,0.4) !important; }
+	.guild-header header,
+	.private-channels .search-bar { height: 54px; background: rgba(0,0,0,0.5) !important; }
 	.guild-header header span {
 		white-space: normal;
 		line-height: 100%;
 	}
-	.private-channels .search-bar { height: 54px; }
 
 	.guild-channels ul .channel-text .channel-name:before { color: #738bd7 !important; }
 	.guild-channels ul .channel-text .badge {
@@ -446,8 +445,8 @@
 	}
 
 	.message-group .message { position: relative; }
-	.message-group.compact .comment .markup { padding-left: 90px; text-indent: -93px; }
-	.message-group.compact .bot-tag { margin: 0; line-height: 22px; }
+	.message-group.compact .comment .markup { padding-left: 65px; text-indent: -75px; }
+	.message-group.compact .bot-tag { margin: 0 3px 0 0 !important; line-height: 22px; }
 	.message-group .comment .markup {
 		min-height: 25px;
 	    line-height: 25px;
@@ -487,9 +486,9 @@
 
 	/* Emoji */
 	.emoji {
-		height: 25px;
-		width: 25px;
-		line-height: 25px;
+		height: 25px !important;
+		width: 25px !important;
+		line-height: 25px !important;
 	}
 
 	/* Expanded description */
@@ -691,6 +690,17 @@
 	}
 
 	.member-username[style*="color:#010000"] { color: #fff !important; }
+
+	.member-username .bot-tag {
+	    display: block !important;
+	    position: absolute;
+	    left: 9px;
+	    z-index: 2;
+	    font-size: 8px !important;
+	    top: 17px;
+	    padding: 0 2px;
+	    height: 15px;
+	}
 
 	.channel-members .member + h2 {
 		margin-top: 20px;
