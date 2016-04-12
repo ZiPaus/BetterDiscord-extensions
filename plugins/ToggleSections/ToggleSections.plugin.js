@@ -20,8 +20,7 @@ ToggleSections = (function() {
 var tssettings = {};
 var containers = [
     { label: 'Server list', className: 'guilds-wrapper', position: 'right' },
-    { label: 'Channel list', className: 'channels-wrap', position: 'right' },
-    { label: 'User list', className: 'channel-members-wrap', position: 'left' }
+    { label: 'Channel list', className: 'channels-wrap', position: 'right' }
 ];
 
 function ToggleSections() {}
