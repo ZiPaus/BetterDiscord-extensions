@@ -1,4 +1,4 @@
-//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.5.4"}*//
+//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.5.5"}*//
 
 /*
     Installation
@@ -125,14 +125,14 @@
 		transition: width 150ms;
 		border-right: 1px solid #1c1e22;
 	}
-	.guilds {
+	.guilds-wrapper .guilds {
 		width: 60px;
 		padding: 14px 9px;
 		overflow-x: hidden;
 	}
 
 	#bd-pub-li .guild-inner a { border-color: transparent !important; }
-	.guilds li .badge {
+	.guilds .guild .badge {
 	    z-index: 3;
 	    border-radius: 10px;
 	    font-size: 9px !important;
@@ -141,7 +141,7 @@
 	    bottom: -3px;
 	}
 
-	.guilds li .avatar-small {
+	.guilds .guild .avatar-small {
 		z-index: 2;
 	}
 
@@ -156,20 +156,22 @@
 		margin: 5px 0;
 		position: absolute;
 		overflow: hidden;
-		top: 37px;
-		right: 8px;
+		top: 30px;
+		right: 9px;
 		background: #738BD7;
-		color: white;
+		color: white !important;
 		border-radius: 50%;
-		letter-spacing: 2px;
+		letter-spacing: 3px;
 		opacity: 0.8;
 		border: 2px solid rgb(40, 40, 40);
 		z-index: 2;
 	}
-	.guilds li { width: 35px !important; height: 35px !important; background-size: 35px 35px !important; }
-	.guilds li:first-of-type:hover ~ .friends-online, .guilds li:first-of-type.active ~ .friends-online { opacity: 1; }
-	.guilds li .avatar-small { width: 35px !important; height: 35px !important; background-size: 35px 35px !important; }
-	.guilds li .guild-inner a {
+
+	.guilds-error { width: 35px; height: 35px; line-height: 32px; margin-left: 3px; }
+	.guilds .guild { width: 35px !important; height: 35px !important; background-size: 35px 35px !important; }
+	.guilds .guild:first-of-type:hover ~ .friends-online, .guilds .guild:first-of-type.active ~ .friends-online { opacity: 1; }
+	.guilds .guild .avatar-small { width: 35px !important; height: 35px !important; background-size: 35px 35px !important; }
+	.guilds .guild .guild-inner a {
 		width: 35px !important;
 		height: 35px !important;
 		background-size: 35px 35px !important;
@@ -188,16 +190,20 @@
 		z-index: 2;
 	}
 
-	.guilds li .guild-inner {
+	.guilds .guild .guild-inner {
 		line-height: 35px !important;
 	    border-radius: 50% !important;
 		background: transparent !important;
-		width: 101%;
+		width: 45px;
 		overflow: visible;
 	}
 
-	.guilds li.guilds-separator { height: 8px !important; }
-	.guilds li.guilds-separator::after { background: rgba(115,139,215,0.4); }
+	.guilds-wrapper .guild-separator { height: 8px !important; }
+	.guilds-wrapper .guild-separator:after {
+		background: rgba(115,139,215,0.4);
+		left: 10%;
+		right: 35%;
+	}
 
 	.guilds-add {
 		font-size: 25px !important;
@@ -205,17 +211,17 @@
 		margin: 5px 0 0 2px;
 	}
 
-	.guilds li.audio .guild-inner::after {
+	.guilds .audio .guild-inner::after {
 		width: 18px;
 	    height: 18px;
 	}
 
-	.guilds li .guild-inner::before {
+	.guilds .guild-inner::before {
 	    content: " ";
 	    position: absolute;
 	    height: 42px !important;
 		width: 16px;
-		padding-left: 30px;
+		padding-left: 29px;
 		padding-right: 5px;
 		background: transparent !important;
 		margin-top: 0 !important;
@@ -225,7 +231,7 @@
 		transition: left 250ms; transition: padding 250ms;
 	}
 
-	.guilds li:hover .guild-inner::before {
+	.guilds .guild:hover .guild-inner::before {
 		left: -45px !important;
 		padding-right: 42px;
 		margin-top: 0;
@@ -233,8 +239,8 @@
 		background: rgba(115, 139, 215, 0.2) !important;
 	}
 
-	.guilds li.active .guild-inner a { border-color: #E2E2E2; }
-	.guilds li.active .guild-inner::before {
+	.guilds .guild.selected .guild-inner a { border-color: #E2E2E2; }
+	.guilds .guild.selected .guild-inner::before {
 		left: -45px !important;
 		padding-right: 41px;
 		border-radius: 0 20px 20px 0;
@@ -242,7 +248,7 @@
 		transition: background 350ms;
 	}
 
-	.guilds li.unread:not(.active) .guild-inner::after {
+	.guilds .guild.unread:not(.active) .guild-inner::after {
 		content: "💬";
 		position: absolute;
 		z-index: 2;
@@ -350,7 +356,6 @@
 		animation-timing-function: ease-in-out;
 	}
 
-	.channel-members .member .member-game > span,
 	#voice-connection .voice-connection-channel,
 	.ping {
 		display: none !important;
@@ -602,6 +607,13 @@
 	.message-group.compact .timestamp { line-height: 25px; color: #d1d9de; }
 	.message-group.compact .timestamp:hover { line-height: 25px; color: #99aab5 !important; }
 
+	/* Embedded previews etc */
+	.embed .embed-provider,
+	.embed .embed-author,
+	.embed .embed-title {
+		margin-bottom: 0;
+	}
+
 
 /****************************** Server user list section ******************************/
 
@@ -632,45 +644,29 @@
 	    margin-left: 5px;
 		transition: width 150ms;
 	}
-	.channel-members h2:hover { width: 55px; }
 
-	.channel-members h2 span:nth-of-type(1) {
+	.channel-members h2 {
 	    display: inline-flex;
 	    white-space: nowrap;
 	}
-	.channel-members h2:hover span:nth-of-type(1) {
+	.channel-members h2:hover {
 		white-space: normal;
 	}
-	.channel-members span:nth-of-type(2) { display: none; }
-	.channel-members h2 span:nth-of-type(3) {
-	    position: absolute;
-	    right: -35px;
-	    bottom: -1px;
-	    border-radius: 7px 0;
-	    background: #738BD7;
-	    padding: 5px;
-	    height: 7px;
-	    min-width: 7px;
-	    line-height: 7px;
-	    color: #fff;
-	    display: inline-flex;
-	    justify-content: center;
-		opacity: 1;
-		transition: all 150ms;
-	}
-	.channel-members h2:hover span:nth-of-type(3) { right: -16px; }
 
-	.channel-members .member .member-game strong { white-space: normal; }
-	.channel-members .member .member-game strong span {
-		font-size: 10px !important;
-		max-height: 32px;
-		display: block;
+	.channel-members .member .member-activity {
+		font-size: 0px !important;
+	}
+	.channel-members .member .member-activity strong {
+		white-space: normal;
+		font-size: 9px !important;
+		max-height: 10px;
+		display: inline-block;
 		overflow: hidden;
-		width: 136%;
+		width: 50px;
 		transition: all 250ms;
 	}
+	.channel-members .member:hover .member-activity strong { max-height: 100px; }
 	.channel-members .member:hover { background: rgba(115, 139, 215, 0.15) !important; }
-	.channel-members .member:hover .member-game strong span { max-height: 100px; }
 	.channel-members .member.popout-open { background: rgba(115, 139, 215, 0.25) !important; }
 	.channel-members .member.popout-open:hover { background: rgba(115, 139, 215, 0.35); }
 
@@ -678,7 +674,7 @@
 		color: hsla(0,0%,100%,.9) !important;
 		padding: 0 0 0 3px;
 		box-sizing: border-box;
-		margin-bottom: 3px;
+		margin-bottom: 5px;
 		border-bottom: 1px solid rgba(0,0,0,0.14);
 		position: relative;
 	}
@@ -694,10 +690,10 @@
 	.member-username .bot-tag {
 	    display: block !important;
 	    position: absolute;
-	    left: 9px;
+	    left: 4px;
 	    z-index: 2;
 	    font-size: 8px !important;
-	    top: 17px;
+	    top: 65%;
 	    padding: 0 2px;
 	    height: 15px;
 	}
@@ -708,9 +704,9 @@
 
 	/* User image @ channel's user list */
 	.channel-members .avatar-small {
-	    width: 25px;
-	    height: 25px;
-	    background-size: 25px 25px;
+	    width: 20px;
+	    height: 20px;
+	    background-size: 20px 20px;
 		margin-right: 0;
 		position: relative;
 		z-index: 2;
@@ -718,7 +714,7 @@
 
 	/* Online status indicator */
 	.channel-members .avatar-small .status {
-	    top: 18px;
+	    top: 65%;
 	    right: -4px;
 	    border: 2px solid #1c1e22;
 		z-index: 3;
@@ -846,7 +842,7 @@
 		left: 0;
 	}
 
-	.bd-minimal .guilds .friends-icon, .bd-minimal .guilds li, .bd-minimal .guilds li .avatar-small, .bd-minimal .guilds li .guild-inner, .bd-minimal .guilds li .guild-inner a {
+	.bd-minimal .guilds .friends-icon, .bd-minimal .guilds .guild, .bd-minimal .guilds .guild .avatar-small, .bd-minimal .guilds .guild .guild-inner, .bd-minimal .guilds .guild .guild-inner a {
 		width: 20px !important;
 		height: 20px !important;
 		background-size: 100% !important;
@@ -861,8 +857,8 @@
 		margin-left: -5px;
 	}
 
-	.bd-minimal .guilds li.active .guild-inner::before,
-	.bd-minimal .guilds li:hover .guild-inner::before {
+	.bd-minimal .guilds .guild.selected .guild-inner::before,
+	.bd-minimal .guilds .guild:hover .guild-inner::before {
 		height: 24px !important;
 		width: 20px !important;
 		left: -65px !important;
@@ -871,7 +867,7 @@
 	}
 
 	/* Unread messages icon */
-	.guilds li.unread:not(.active) .guild-inner::after { top: -10px; }
+	.guilds .guild.unread:not(.active) .guild-inner::after { top: -10px; }
 
 	.bd-minimal .theme-dark .comment { border-left: none; }
 
