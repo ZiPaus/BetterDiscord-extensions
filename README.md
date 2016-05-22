@@ -4,7 +4,7 @@ Requires [BetterDiscordApp](https://github.com/Jiiks/BetterDiscordApp)
 
 ## Themes
 All themes go under %AppData%/BetterDiscord/themes  
-### [Clean & Compact](https://github.com/kettui/BetterDiscord-extensions/blob/master/themes/clean-compact/clean-compact.css)
+### [Clean & Compact](https://github.com/kettui/BetterDiscord-extensions/blob/master/themes/clean-compact/clean-compact.theme.css)
 A dark, compact layout for those who like to save some space 
 
 ![Clean & Compact](http://i.imgur.com/lG2wvXH.png)  
