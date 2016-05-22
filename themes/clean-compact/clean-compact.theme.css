@@ -836,7 +836,7 @@
 /********************* BetterDiscord Minimal Mode support **********************/
 
 	.bd-minimal .guilds-wrapper { width: 45px !important; }
-	.bd-minimal #bd-pub-button { line-height: 20px !important; }
+	.bd-minimal #bd-pub-li { line-height: 20px !important; }
 	.bd-minimal .guilds .friends-icon {
 		top: 0;
 		left: 0;
@@ -888,7 +888,12 @@
 /********************************* Other BetterDiscord overwrites *********************************/
 
 	/* BetterDiscord Public servers button */
-	#bd-pub-button { line-height: 35px !important; }
+	#bd-pub-li { line-height: 35px !important; }
+	#bd-pub-li .guild-inner,
+	#bd-pub-button {
+		line-height: 35px !important;
+		height: 35px !important
+	}
 
 	#bd-ps-header { height: 40px; }
 	#bd-ps-header h2, #bd-ps-header span { line-height: 40px; }
