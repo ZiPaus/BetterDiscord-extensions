@@ -807,7 +807,7 @@
     }
 
     .search-results-wrap .channel-separator .channel-name {
-        background-color: transparent;
+        background-color: transparent !important;
         color: #738bd7 !important;
     }
 
