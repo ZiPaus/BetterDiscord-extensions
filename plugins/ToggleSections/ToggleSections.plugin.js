@@ -150,7 +150,7 @@ class ToggleSections {
 
             '.toggle-section:hover { opacity: 1 !important; }',
 
-            '.toggle-section.right { right: 0; border-right-width: 10px; }',
+            '.toggle-section.right { right: 0; border-right-width: 10px; z-index: 999; }',
 
             '.toggleable.closed .toggle-section.right {',
                 'right: -10px;',
