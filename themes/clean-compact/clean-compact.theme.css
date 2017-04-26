@@ -1,4 +1,4 @@
-//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.5.6"}*//
+//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.5.7"}*//
 
 /*
     Installation
@@ -13,6 +13,7 @@
     v1.5.x: Bug fixes, small improvements all-around
     v1.5.4: Changed bg image
     v1.5.6: Support for the new search
+    v1.5.7: Minor bugfixes
  */
 
 
@@ -32,7 +33,7 @@
 
     /* Background image */
     .app {
-        background: url(https://i.imgur.com/38O9SOp.jpg);
+        /*background: url(https://i.imgur.com/38O9SOp.jpg);*/
         background-size: cover !important;
         /*background-position: 50% 50% !important;*/
     }
@@ -54,7 +55,7 @@
     .divider,
     .divider-red span,
     .messages-wrapper,
-    #voice-connection,
+    #rtc-connection,
     .channel-textarea textarea,
     .friends-table,
     .guild-channels .channel-text.selected,
@@ -68,9 +69,10 @@
 
     .account,
     .account .btn,
-    #voice-connection .btn,
+    #rtc-connection .btn,
     .help-container,
     .messages-wrapper .messages .divider span {
+        background: transparent !important;
         background-color: transparent !important;
         box-shadow: none;
     }
@@ -174,7 +176,7 @@
     }
 
     .guilds-error { width: 35px; height: 35px; line-height: 32px; margin-left: 3px; }
-    .guilds .guild { width: 35px !important; height: 35px !important; background-size: 35px 35px !important; }
+    .guilds .guild, .guilds .guild .guilds-error { width: 35px !important; height: 35px !important; line-height: 35px !important; background-size: 35px 35px !important; }
     .guilds .guild:first-of-type:hover ~ .friends-online, .guilds .guild:first-of-type.active ~ .friends-online { opacity: 1; }
     .guilds .guild .avatar-small { width: 35px !important; height: 35px !important; background-size: 35px 35px !important; }
     .guilds .guild .guild-inner a {
@@ -365,7 +367,7 @@
         animation-timing-function: ease-in-out;
     }
 
-    #voice-connection .voice-connection-channel,
+    #rtc-connection .voice-connection-channel,
     .ping {
         display: none !important;
     }
@@ -387,8 +389,8 @@
         border-bottom: 1px solid #1c1e22;
     }
 
-    #voice-connection { padding: 5px 7px; }
-    #voice-connection .btn {
+    #rtc-connection { padding: 5px 7px; }
+    #rtc-connection .btn {
         width: 22px;
         height: 22px;
     }
@@ -417,11 +419,11 @@
     }
 
     .account .btn-group,
-    #voice-connection .btn-group {
+    #rtc-connection .btn-group {
         border: none;
     }
 
-    .account .btn, #voice-connection .btn {
+    .account .btn, #rtc-connection .btn {
         box-shadow: none !important;
         border-right: 0 !important;
     }
