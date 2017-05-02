@@ -636,17 +636,10 @@
         margin-bottom: 0;
     }
 
-    .embed .embed-content {
-        margin-bottom: 5px;
-    }
-
-    .embed .embed-fields .embed-field .embed-field-name {
-        margin-bottom: -5px;
-    }
-
-    .embed .embed-fields .embed-field {
-        padding-top: 0;
-    }
+    .embed .embed-content { margin-bottom: 5px; }
+    .embed .embed-fields .embed-field .embed-field-name { margin-bottom: -5px; }
+    .embed .embed-fields .embed-field { padding-top: 0; }
+    .embed .embed-description.markup { font-size: inherit !important; }
 
 
 /****************************** Server user list section ******************************/
