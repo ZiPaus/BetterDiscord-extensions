@@ -1,4 +1,4 @@
-//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.5.7"}*//
+//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.5.8"}*//
 
 /*
     Installation
@@ -14,6 +14,7 @@
     v1.5.4: Changed bg image
     v1.5.6: Support for the new search
     v1.5.7: Minor bugfixes
+    v1.5.8: Embed fixes
  */
 
 
@@ -499,7 +500,7 @@
     }
 
     .message-group .message { position: relative; }
-    .message-group.compact .comment .markup { padding-left: 65px; text-indent: -75px; }
+    .message-group.compact .comment .markup { padding-left: 75px; text-indent: -75px; }
     .message-group.compact .bot-tag { margin: 0 3px 0 0 !important; line-height: 22px; }
     .message-group .comment .markup {
         min-height: 25px;
@@ -507,6 +508,7 @@
         margin-top: 3px;
         color: rgba(255, 255, 255, 0.7);
     }
+    .message-group .embed-field .markup { margin-top: 0; }
     .message-group .message .markup a { white-space: pre; }
 
     .message-group .avatar-large {
@@ -517,7 +519,7 @@
         background-size: 30px 30px;
     }
 
-    .message-group.compact .accessory { padding-left: 60px; }
+    .message-group.compact .accessory { padding-left: 68px; }
     .message .btn-option { position: relative; z-index: 3 !important; }
 
     /* Emote menu */
@@ -630,8 +632,20 @@
     /* Embedded previews etc */
     .embed .embed-provider,
     .embed .embed-author,
-    .embed .embed-title {
+    .embed .embed-title  {
         margin-bottom: 0;
+    }
+
+    .embed .embed-content {
+        margin-bottom: 5px;
+    }
+
+    .embed .embed-fields .embed-field .embed-field-name {
+        margin-bottom: -5px;
+    }
+
+    .embed .embed-fields .embed-field {
+        padding-top: 0;
     }
 
 
