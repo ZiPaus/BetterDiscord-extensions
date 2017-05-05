@@ -7,7 +7,7 @@ All themes go under %AppData%/BetterDiscord/themes
 ### [Clean & Compact](https://github.com/kettui/BetterDiscord-extensions/blob/master/themes/clean-compact/clean-compact.theme.css)
 A dark, compact layout for those who like to save some space 
 
-![Clean & Compact](https://i.gyazo.com/998c9a41804b03a8215ec85a62df832e.png)  
+![Clean & Compact](https://i.gyazo.com/d0ea2dfa19e3248df5676ade35ebc975.png)  
 
 - Can be used with various settings (Cozy, compact mode, light or dark, BD minimal mode etc.)
 - Optimized for dark theme and compact message display
