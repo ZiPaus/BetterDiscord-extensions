@@ -1,4 +1,4 @@
-//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.5.8"}*//
+//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.6.0"}*//
 
 /*
     Installation
@@ -15,6 +15,7 @@
     v1.5.6: Support for the new search
     v1.5.7: Minor bugfixes
     v1.5.8: Embed fixes
+    v1.6.0 (May 5th 2017): New & improved look - less borders, more background shades.
  */
 
 
@@ -40,7 +41,8 @@
     }
 
     /* Adds a black background to the bottom 100px */
-    .app > .flex-spacer { background: linear-gradient(to top, #000, transparent 100px) !important; }
+    .app > .flex-spacer,
+    #friends .friends-table .friends-table-body { background: rgb(17,17,17) !important; }
 
     /**
      * Background colors
@@ -79,25 +81,26 @@
     }
 
     /* Chat section header, server list */
-    .guilds-wrapper,
-    .chat .title-wrap {
-        background:rgba(0,0,0,0.8) !important;
-        border-bottom: 1px solid #1c1e22 !important;
+    .guilds-wrapper {
+        background: rgb(32,32,32) !important;
+        /*border-bottom: 1px solid #1c1e22 !important;*/
     }
 
-    #friends .friends-header { background: rgba(0,0,0,0.55) !important; }
+    .chat .title-wrap {
+        background: rgb(27,27,27) !important;
+    }
 
     /* Text / voice channels, friends tab content area */
     .channels-wrap,
     #friends {
-        background:rgba(0,0,0,0.65) !important;
+        background:rgb(22,22,22) !important;
     }
 
     /* Chat */
     .content .flex-spacer { background: rgba(0,0,0,0.65); }
 
     /* Channel user list */
-    .channel-members { background: rgba(0,0,0,0.80) !important; }
+    .channel-members { background: rgb(22,22,22) !important; }
     .guild-header ul { opacity: 0; top: 54px; }
 
     /* Channel, user etc. hover effect */
@@ -111,17 +114,14 @@
     /* Scroller */
     /* Scroller piece */
     .scroller-wrap .scroller::-webkit-scrollbar-thumb {
-        border-color: black !important;
-        background: linear-gradient(
-            rgb(6,6,6),
-            rgb(32,32,32)
-        ) !important;
+        border-color: rgb(17,17,17) !important;
+        background: rgb(30,30,30) !important;
     }
 
     /* Whole bar */
     .scroller-wrap .scroller::-webkit-scrollbar-track-piece {
-        background-color: rgba(255,255,255,0.15) !important;
-        border-color: rgba(0,0,0,0.65) !important;
+        background-color: transparent !important;
+        border-color: transparent !important;
     }
 
 
@@ -132,7 +132,7 @@
     .guilds-wrapper {
         width: 60px;
         transition: width 150ms;
-        border-right: 1px solid #1c1e22;
+        /*border-right: 1px solid #1c1e22;*/
     }
     .guilds-wrapper .guilds {
         width: 60px;
@@ -166,7 +166,7 @@
         position: absolute;
         overflow: hidden;
         top: 30px;
-        right: 9px;
+        left: 35px;
         background: #738BD7;
         color: white !important;
         border-radius: 50%;
@@ -205,6 +205,13 @@
         background: transparent !important;
         width: 45px;
         overflow: visible;
+    }
+    .guilds-wrapper .guilds .guild.audio .guild-inner:after {
+        left: 8px;
+        bottom: 5px;
+        background-size: 16px;
+        right: initial;
+        top: initial;
     }
 
     .guilds-wrapper .guild-separator { height: 8px !important; }
@@ -262,7 +269,7 @@
         position: absolute;
         z-index: 2;
         top: -15px !important;
-        right: -6px;
+        right: -14px;
         color: white;
         background: none !important;
         width: initial;
@@ -281,13 +288,13 @@
 /************************* Text/voice channel section *************************/
 
     .channels-wrap {
-        width: 120px !important;
-        border-right: 1px solid #1c1e22;
+        width: 130px !important;
+        /*border-right: 1px solid #1c1e22;*/
         transition: width 150ms;
         position: relative;
     }
 
-    .channels-wrap .scroller-wrap { width: 128px !important; }
+    .channels-wrap .scroller-wrap { width: 143px !important; }
 
     .guild-channels { padding: 0; }
 
@@ -303,12 +310,12 @@
     .private-channels .search-bar {
         padding: 15px;
         box-shadow: none;
-        border-bottom: 1px solid #1c1e22;
+        /*border-bottom: 1px solid #1c1e22;*/
         box-sizing: border-box;
     }
 
     .guild-header header,
-    .private-channels .search-bar { height: 54px; background: rgba(0,0,0,0.5) !important; }
+    .private-channels .search-bar { height: 54px; background: rgb(27,27,27) !important; }
     .guild-header header span {
         white-space: normal;
         line-height: 100%;
@@ -322,7 +329,7 @@
     }
 
     .guild-channels .channel-text a {
-        padding: 5px;
+        padding: 6px;
         box-sizing: border-box;
     }
 
@@ -345,7 +352,7 @@
     }
 
     .guild-channels .channel-text a { padding 5px; }
-    .guild-channels .channel-voice {	padding: 5px 0 5px 8px; }
+    .guild-channels .channel-voice {	padding: 5px 5px 5px 8px; }
     .guild-channels .channel-voice-states {
         padding-left: 0;
         margin-top: 0;
@@ -360,17 +367,12 @@
         opacity: 1;
         position: absolute;
         left: initial;
-        right: 13px;
+        right: 20px;
         top: 6px;
         animation-name: zoomAppear;
         animation-duration: .2s;
         animation-iteration-count: 1;
         animation-timing-function: ease-in-out;
-    }
-
-    #rtc-connection .voice-connection-channel,
-    .ping {
-        display: none !important;
     }
 
     .guild-channels .channel-voice .channel-arrow {
@@ -390,27 +392,55 @@
         border-bottom: 1px solid #1c1e22;
     }
 
-    #rtc-connection { padding: 5px 7px; }
+    #rtc-connection {
+        position: relative;
+        padding: 7px 10px;
+        overflow: hidden;
+        border-top: none;
+        background: rgb(27,27,27) !important;
+    }
+    #rtc-connection .rtc-connection-status { font-size: 0.9em !important; }
+    #rtc-connection .rtc-connection-channel { margin-right: 0; margin-top: 6px; }
+    #rtc-connection .btn-group {
+        background: rgb(27,27,27);
+        position: absolute;
+        padding: 10px 7px 9px 5px;
+        right: -58px;
+        transition: right 150ms;
+        overflow: hidden;
+        z-index: 2;
+        bottom: initial;
+        top: 0;
+    }
+    #rtc-connection:hover .btn-group,
+    #rtc-connection .btn-group:hover {
+        right: 0;
+    }
     #rtc-connection .btn {
         width: 22px;
         height: 22px;
     }
+    #rtc-connection .btn {
+        margin-right: 0;
+    }
     .account {
-        height: 70px !important;
-        padding: 0 2px 10px !important;
+        background: rgb(27,27,27) !important;
+        height: 74px !important;
+        padding: 0 2px 12px !important;
         align-items: flex-end !important;
+        border-top: none;
     }
     .account .avatar-small { margin-left: 5px; display: block !important; }
     .account .btn-group {
         position: absolute;
         left: 0;
-        bottom: 45px;
-        border-bottom: 1px solid #1c1e22 !important;
-        width: 125px;
+        bottom: 50px;
+        /*border-bottom: 1px solid #1c1e22 !important;*/
+        width: 130px;
         border-radius: 0;
         justify-content: space-around;
         display: flex;
-        padding-bottom: 5px;
+        padding-left: 2px;
     }
 
     .account .btn {
@@ -469,18 +499,34 @@
     }
 
     .search .search-bar {
-        background-color: rgba(255,255,255,0.1) !important;
+        background-color: rgb(35,35,35) !important;
+    }
+
+    .search-bar .search-bar-inner {
+        width: 100px;
+    }
+
+    .win-buttons {
+        right: 12px;
     }
 
 
 /******************************* Text chat section *******************************/
 
+    .chat form {
+        margin: 0;
+        padding: 0 20px;
+        background: rgb(22,22,22);
+        border-top: none !important;
+    }
+
+    .chat form .typing { padding-left: 20px; }
 
     /* Message section header */
     .chat > .title-wrap {
         min-height: 54px;
         box-shadow: none;
-        border-color: #1c1e22;
+        border-bottom: none !important;
     }
     .chat .title-wrap .channel-name { color: #fff; }
     .chat > .title-wrap > .title .channel-name::before { color: #738BD7; }
@@ -494,11 +540,13 @@
     /* Message styling */
     .message-group {
         padding: 3px 0;
-        margin-left: 15px;
+        margin-left: 5px;
+        margin-right: 0;
         border-bottom: none;
         overflow: hidden;
     }
 
+    .message-group .comment { margin-right: 5px; }
     .message-group .message { position: relative; }
     .message-group.compact .comment .markup { padding-left: 75px; text-indent: -75px; }
     .message-group.compact .bot-tag { margin: 0 3px 0 0 !important; line-height: 22px; }
@@ -508,6 +556,7 @@
         margin-top: 3px;
         color: rgba(255, 255, 255, 0.7);
     }
+    .message-group .embed { background: rgb(27,27,27); border: none !important; }
     .message-group .embed-field .markup { margin-top: 0; }
     .message-group .message .markup a { white-space: pre; }
 
@@ -636,14 +685,24 @@
         margin-bottom: 0;
     }
 
+    .embed .embed-provider,
+    .embed .embed-author,
+    .embed .embed-title,
+    .embed .embed-field-name,
+    .embed .embed-field-value,
+    .embed .embed-description.markup {
+        font-size: inherit !important;
+    }
+
+    .embed .image { margin: auto !important; }
     .embed .embed-content { margin-bottom: 5px; }
     .embed .embed-fields .embed-field .embed-field-name { margin-bottom: -5px; }
     .embed .embed-fields .embed-field { padding-top: 0; }
-    .embed .embed-description.markup { font-size: inherit !important; }
 
 
 /****************************** Server user list section ******************************/
 
+    .header-toolbar .separator.separator-win { margin-right: 103px; }
 
     .channel-members {
         width: 105px;
@@ -656,21 +715,21 @@
     }
 
     .channel-members-wrap {
-        width: 105px;
+        width: 110px;
         min-width: 0 !important;
         display: flex !important;
-        border-left: 1px solid #1c1e22;
+        /*border-left: 1px solid #1c1e22;*/
         transition: width 150ms;
     }
 
     /* Channel's user list group labels */
     .channel-members h2 {
         position: relative;
-        padding: 0 15px 2px 0;
-        width: 80px;
+        padding: 0 0 2px 0;
+        width: 100px;
         letter-spacing: .001em;
         border-bottom: 1px solid #738bd7;
-        margin-left: 5px;
+        margin-left: 7px;
         transition: width 150ms;
     }
 
@@ -701,15 +760,17 @@
 
     .channel-members .member {
         color: hsla(0,0%,100%,.9) !important;
-        padding: 0 0 0 3px;
+        padding: 1px 0 1px 10px;
         box-sizing: border-box;
         margin-bottom: 5px;
         border-bottom: 1px solid rgba(0,0,0,0.14);
         position: relative;
+        width: 110px;
+        overflow: visible;
     }
 
     .channel-members .member .member-inner {
-        width: 73px;
+        width: 80px;
         padding: 0 0 0 8px;
         box-sizing: border-box;
     }
@@ -719,7 +780,7 @@
     .member-username .bot-tag {
         display: block !important;
         position: absolute;
-        left: 4px;
+        left: 15px;
         z-index: 2;
         font-size: 8px !important;
         top: 65%;
@@ -776,7 +837,7 @@
 
 
     .search-results-wrap {
-        background-color: rgba(0,0,0,0.80) !important;
+        background-color: rgb(22,22,22) !important;
     }
 
     .search-results-wrap .scroller-wrap .scroller {
@@ -808,7 +869,7 @@
     }
 
     .search-results-wrap .search-result.expanded .search-result-message.hit {
-        background-color: rgba(255,255,255,0.1) !important;
+        background-color: rgb(35,35,35) !important;
     }
 
     .search-results-wrap .channel-separator {
@@ -826,28 +887,37 @@
 
 /******************************* Friends tab **********************************/
 
+    #friends .friends-table { background: rgb(17,17,17); margin-top: 0; }
+    #friends .friends-table .friends-table-header { background: rgb(17,17,17); }
+
     #friends .friends-header,
     #friends .friends-table .friends-table-header,
     #friends .friends-table .friends-row + .friends-row {
-        border-color: #1c1e22;
+        border: none;
     }
 
-    #friends .friends-header { height: 53px; }
+    #friends .friends-header {
+        height: 53px;
+        background: rgb(25,25,25) !important;
+        border-bottom: none !important;
+    }
 
     #friends .friends-table .friends-row {
         height: 45px !important;
-        margin-left: 25px;
-        margin-right: 12px;
-        transition: margin 150ms;
+        padding-left: 15px;
+        margin-left: 0;
+        padding-right: 12px;
+        margin-right: 0;
+        transition: padding 150ms;
     }
 
     #friends .friends-table .friends-row:hover {
         margin: 0 0;
         padding: 0 0;
-        margin-left: 30px !important;
+        padding-left: 20px !important;
     }
 
-    .private-channels .channel { padding-left: 10px; }
+    .private-channels .channel { padding-left: 10px; padding-right: 6px; }
     .private-channels .channel a { padding-left: 0; }
     .private-channels .channel a .avatar-small {
         width: 25px;
@@ -948,6 +1018,7 @@
     }
 
     /* Unread messages icon */
+    .guild.unread::before { display: none; }
     .guilds .guild.unread:not(.active) .guild-inner::after { top: -10px; }
 
     .bd-minimal .theme-dark .comment { border-left: none; }
