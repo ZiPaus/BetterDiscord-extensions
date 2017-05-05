@@ -1,4 +1,4 @@
-//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.6.0"}*//
+//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.6.1"}*//
 
 /*
     Installation
@@ -16,6 +16,7 @@
     v1.5.7: Minor bugfixes
     v1.5.8: Embed fixes
     v1.6.0 (May 5th 2017): New & improved look - less borders, more background shades.
+    v1.6.1 Cozy mode improvements
  */
 
 
@@ -145,9 +146,19 @@
         z-index: 3;
         border-radius: 10px;
         font-size: 9px !important;
-        padding: 0px 4px;
-        right: -6px;
-        bottom: -3px;
+        padding: 6px 5px 6px 4px;
+        line-height: 0px;
+        left: 1px;
+        top: 29px;
+        right: initial !important;
+        text-align: center;
+        color: #fff;
+        opacity: 0.8;
+        font-weight: 600;
+    }
+    .guilds .guild:not(:first-of-type) .badge {
+        opacity: 1;
+        left: 30px;
     }
 
     .guilds .guild .avatar-small {
@@ -539,11 +550,16 @@
 
     /* Message styling */
     .message-group {
-        padding: 3px 0;
-        margin-left: 5px;
+        padding: 5px 0;
+        margin-left: 10px;
         margin-right: 0;
         border-bottom: none;
         overflow: hidden;
+    }
+
+    .message-group.compact {
+        padding: 3px 0;
+        margin-left: 5px;
     }
 
     .message-group .comment { margin-right: 5px; }
@@ -553,16 +569,17 @@
     .message-group .comment .markup {
         min-height: 25px;
         line-height: 25px;
-        margin-top: 3px;
         color: rgba(255, 255, 255, 0.7);
+        margin-top: 0;
     }
+    .message-group.compact .comment .markup { margin-top: 3px; }
     .message-group .embed { background: rgb(27,27,27); border: none !important; }
     .message-group .embed-field .markup { margin-top: 0; }
     .message-group .message .markup a { white-space: pre; }
 
     .message-group .avatar-large {
         margin-top: 0;
-        margin-right: 15px;
+        margin-right: 12px;
         width: 30px;
         height: 30px;
         background-size: 30px 30px;
