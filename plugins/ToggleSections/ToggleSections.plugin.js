@@ -14,31 +14,125 @@
     v1.2    (April 6th 2016):       Improved settings, bug fixes
     v1.3    (April 7th 2016):       Refactoring
     v1.4    (January 10th 2017):    Fix misc. crashes, switch to new BD settings storage, refactor to ES6 class syntax
+    v1.5    (May 6th 2017):         Added a Container class for simplified state management. Added hotkeys for toggling guild/channel sections
+                                    Ctrl+Shift+X toggles guilds, Ctrl+Shift+C toggles channels
  */
 
-class ToggleSections {
-
-    constructor() {
-        // Default settings for the first run, after that stored settings will be used
-        this.settings = {
-            enabled: [true, true],
-            closed: [false, false],
-            color: "#738BD7",
-        };
-        this.containers = [
-            { label: 'Server list', className: 'guilds-wrapper', position: 'right' },
-            { label: 'Channel list', className: 'channels-wrap', position: 'right' },
-        ];
+class TSContainer {
+    constructor(plugin, index, {label, className, position}) {
+        this.plugin = plugin;
+        this.index = index
+        this.label = label;
+        this.className = className;
+        this.position = position;
 
         this.attachHandler = this.attachHandler.bind(this);
+        this.removeHandlers = this.removeHandlers.bind(this);
+        this.close = this.close.bind(this);
+        this.toggle = this.toggle.bind(this);
+    }
+
+    get isClosed() {
+        return this.plugin.settings.closed[this.index];
+    }
+
+    get isEnabled() {
+        return this.plugin.settings.enabled[this.index];
+    }
+
+    get containerElem() {
+        return $(`.${this.className}`);
+    }
+
+    get buttonElem() {
+        return $(`#toggle-${this.className}`);
+    }
+
+    get buttonElemExists() {
+        return $(`#toggle-${this.className}`).length > 0;
+    }
+
+    attachHandler() {
+        const {
+            buttonElem,
+            buttonElemExists,
+            containerElem,
+            handleClick,
+            isClosed,
+            isEnabled,
+            index,
+            position,
+            className,
+            plugin,
+            close,
+            toggle,
+        } = this;
+
+        if (buttonElemExists && !isEnabled)
+            return this.removeHandlers();
+
+        if (buttonElemExists || !isEnabled)
+            return;
+
+        containerElem.append(`<div class="toggle-section ${position}" id="toggle-${className}"></div>`);
+        containerElem.addClass("toggleable");
+
+        if(isClosed) close();
+
+        $(`#toggle-${className}`).on("click.ts", toggle);
+    }
+
+    removeHandlers() {
+        const { buttonElem } = this;
+        buttonElem.off("click.ts");
+        buttonElem.remove();
+    }
+
+    close() {
+        const { containerElem } = this;
+        containerElem.addClass("closed");
+    }
+
+    toggle() {
+        const { plugin, index, containerElem, isClosed } = this;
+        isClosed
+            ? containerElem.removeClass("closed")
+            : containerElem.addClass("closed");
+        plugin.settings.closed[index] = !isClosed;
+        plugin.updateSettings();
+    }
+}
+
+// Default settings for the first run, after that stored settings will be used
+const defaultSettings = {
+    enabled: [true, true],
+    closed: [false, false],
+    color: "#738BD7",
+};
+
+class ToggleSections {
+    constructor() {
+        this.containers = [
+            new TSContainer(this, 0, { label: 'Guild list', className: 'guilds-wrapper', position: 'right' }),
+            new TSContainer(this, 1, { label: 'Channel list', className: 'channels-wrap', position: 'right' }),
+        ];
+
         this.start = this.start.bind(this);
         this.onSwitch = this.onSwitch.bind(this);
         this.observer = this.observer.bind(this);
         this.stop = this.stop.bind(this);
-        this.attachHandler = this.attachHandler.bind(this);
         this.addStyling = this.addStyling.bind(this);
+        this.setupHotkeys = this.setupHotkeys.bind(this);
         this.getSettingsPanel = this.getSettingsPanel.bind(this);
         this.updateSettings = this.updateSettings.bind(this);
+    }
+
+    get guildContainer() {
+        return this.containers[0];
+    }
+
+    get channelContainer() {
+        return this.containers[1];
     }
 
     getName() {
@@ -50,7 +144,7 @@ class ToggleSections {
     }
 
     getVersion() {
-        return "1.4";
+        return "1.5";
     }
 
     getAuthor() {
@@ -62,20 +156,21 @@ class ToggleSections {
     onMessage() {}
 
     start() {
-        const { settings, onSwitch, addStyling } = this;
+        const { onSwitch, addStyling, setupHotkeys } = this;
 
         if(!bdPluginStorage.get("ToggleSections", "settings"))
-            bdPluginStorage.set("ToggleSections", "settings", JSON.stringify(settings));
+            bdPluginStorage.set("ToggleSections", "settings", JSON.stringify(defaultSettings));
 
         this.settings = JSON.parse(bdPluginStorage.get("ToggleSections", "settings"));
 
         onSwitch();
         addStyling();
+        setupHotkeys();
     }
 
     onSwitch() {
-        const { containers, attachHandler } = this;
-        containers.forEach(attachHandler);
+        const { containers } = this;
+        containers.forEach(container => container.attachHandler());
     }
 
     observer(e) {
@@ -85,47 +180,9 @@ class ToggleSections {
 
     stop() {
         $("#toggle-sections").remove();
-        this.containers.forEach(container => {
-            $('#toggle-'+ container.className).off("click.ts");
-            $('#toggle-'+ container.className).remove();
-        });
+        $(document).off("keypress.ts");
+        this.containers.forEach(container => container.removeHandlers());
     };
-
-    attachHandler(container, i) {
-        const { settings, updateSettings } = this;
-
-        const section = $("."+container.className);
-        const buttonExists = $("#toggle-"+ container.className).length > 0;
-
-        if(buttonExists && !settings.enabled[i]) {
-            $("#toggle-"+ container.className).off("click.ts");
-            $("#toggle-"+ container.className).remove();
-            return;
-        }
-
-        if(buttonExists || !settings.enabled[i]) return;
-
-        section.append('<div class="toggle-section '+ container.position +'" id="toggle-'+ container.className +'"></div>');
-        section.addClass("toggleable");
-
-        const btn = $('#toggle-'+ container.className +'');
-
-        const toggleSection = () => {
-            settings.closed[i] ? section.addClass("closed") : section.removeClass("closed");
-        }
-
-        const handleClick = () => {
-            const isClosed = this.settings.closed[i] ? false : true;
-            settings.closed[i] = isClosed;
-            updateSettings();
-            toggleSection();
-        };
-
-        if(settings.closed[i])
-            toggleSection();
-
-        btn.on("click.ts", handleClick);
-    }
 
     addStyling() {
         const { containers, settings } = this;
@@ -182,6 +239,18 @@ class ToggleSections {
         $("head").append(`<style id="toggle-sections">${css}</style>`);
     }
 
+    // TODO: Make hotkeys configurable
+    setupHotkeys() {
+        $(document).on("keypress.ts", ({ ctrlKey, shiftKey, keyCode }) => {
+            if(!ctrlKey || !shiftKey) return;
+
+            // C
+            if(keyCode === 3) this.channelContainer.toggle();
+            // X
+            else if(keyCode === 24) this.guildContainer.toggle();
+        });
+    }
+
     getSettingsPanel() {
         const { containers, settings, addStyling, updateSettings, onSwitch } = this;
 
@@ -198,13 +267,13 @@ class ToggleSections {
                 "type": 'checkbox',
                 "data-ts-i": i,
                 "id": 'ts-'+ container.className,
-                "checked": settings.enabled[i],
+                "checked": container.isEnabled,
                 click() {
                     const elem = $(this);
                     const isChecked = elem.attr("checked");
                     const u = parseInt(elem.attr("data-ts-i"));
 
-                    settings.enabled[u] = settings.enabled[u] ? false : true;
+                    settings.enabled[u] = !settings.enabled[u];
 
                     updateSettings();
                     onSwitch();
@@ -234,3 +303,5 @@ class ToggleSections {
         bdPluginStorage.set("ToggleSections", "settings", JSON.stringify(this.settings));
     }
 }
+
+ToggleSections.Container = TSContainer;
