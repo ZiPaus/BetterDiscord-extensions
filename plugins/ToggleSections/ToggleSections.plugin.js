@@ -112,6 +112,8 @@ const defaultSettings = {
 
 class ToggleSections {
     constructor() {
+        this.settings = defaultSettings;
+
         this.containers = [
             new TSContainer(this, 0, { label: 'Guild list', className: 'guilds-wrapper', position: 'right' }),
             new TSContainer(this, 1, { label: 'Channel list', className: 'channels-wrap', position: 'right' }),
@@ -271,9 +273,8 @@ class ToggleSections {
                 click() {
                     const elem = $(this);
                     const isChecked = elem.attr("checked");
-                    const u = parseInt(elem.attr("data-ts-i"));
 
-                    settings.enabled[u] = !settings.enabled[u];
+                    settings.enabled[container.index] = !settings.enabled[container.index];
 
                     updateSettings();
                     onSwitch();
