@@ -1,4 +1,4 @@
-//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.6.1"}*//
+//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.6.2"}*//
 
 /*
     Installation
@@ -17,6 +17,7 @@
     v1.5.8: Embed fixes
     v1.6.0 (May 5th 2017): New & improved look - less borders, more background shades.
     v1.6.1 Cozy mode improvements
+    v1.6.2 Fixed memberlist loading indicator, other small tweaks
  */
 
 
@@ -98,10 +99,16 @@
     }
 
     /* Chat */
-    .content .flex-spacer { background: rgba(0,0,0,0.65); }
+    .content .flex-spacer { background: rgb(17,17,17); }
 
     /* Channel user list */
     .channel-members { background: rgb(22,22,22) !important; }
+
+    /* Channel use list loading indicators */
+    .channel-members-loading { background: rgba(35,35,35,0.2) !important; }
+    .channel-members-loading .member,
+    .channel-members-loading .heading { background-image: none !important; }
+
     .guild-header ul { opacity: 0; top: 54px; }
 
     /* Channel, user etc. hover effect */
@@ -156,9 +163,10 @@
         opacity: 0.8;
         font-weight: 600;
     }
-    .guilds .guild:not(:first-of-type) .badge {
+    .guilds .guild:not(:first-of-type) .badge,
+    .guilds .dms .guild .badge {
         opacity: 1;
-        left: 30px;
+        left: 27px;
     }
 
     .guilds .guild .avatar-small {
@@ -242,6 +250,8 @@
         width: 18px;
         height: 18px;
     }
+
+    .guilds-wrapper .guilds .guild.selected:before { display: none; }
 
     .guilds .guild-inner::before {
         content: " ";
@@ -557,13 +567,9 @@
         overflow: hidden;
     }
 
-    .message-group.compact {
-        padding: 3px 0;
-        margin-left: 5px;
-    }
-
     .message-group .comment { margin-right: 5px; }
     .message-group .message { position: relative; }
+    .message-group.compact { margin-left: 5px; }
     .message-group.compact .comment .markup { padding-left: 75px; text-indent: -75px; }
     .message-group.compact .bot-tag { margin: 0 3px 0 0 !important; line-height: 22px; }
     .message-group .comment .markup {
@@ -572,7 +578,7 @@
         color: rgba(255, 255, 255, 0.7);
         margin-top: 0;
     }
-    .message-group.compact .comment .markup { margin-top: 3px; }
+    .message-group.compact .comment .markup { margin-bottom: 0; }
     .message-group .embed { background: rgb(27,27,27); border: none !important; }
     .message-group .embed-field .markup { margin-top: 0; }
     .message-group .message .markup a { white-space: pre; }
@@ -587,6 +593,9 @@
 
     .message-group.compact .accessory { padding-left: 68px; }
     .message .btn-option { position: relative; z-index: 3 !important; }
+
+    .reaction { background: rgb(27,27,27) !important; transition: background 150ms; }
+    .reaction:hover { background: rgb(37,37,37) !important; }
 
     /* Emote menu */
     .channel-textarea-emoji > .sprite-item {
@@ -629,6 +638,7 @@
 
     .chat .divider { height: 10px !important; }
     .chat .divider > div { background: #474a4f; }
+    .chat .messages-wrapper, .chat .messages-wrapper .scroller-wrap { padding-bottoM: 3px; }
     .messages-wrapper .messages .divider:not(.red) span { border-radius: 3px; }
     .message-group .markup pre { display: inline-block; }
     .message-group .markup pre code { background: rgba(255,255,255,0.05) !important; }
@@ -691,7 +701,7 @@
 
     /* Compact message styling */
     .message-group.compact { padding: 0 !important; }
-    .message-group.compact .message { margin: 2px 0; line-height: 25px; }
+    .message-group.compact .message { margin: 3px 0; line-height: 25px; }
     .message-group.compact .timestamp { line-height: 25px; color: #d1d9de; }
     .message-group.compact .timestamp:hover { line-height: 25px; color: #99aab5 !important; }
 
@@ -710,6 +720,7 @@
     .embed .embed-description.markup {
         font-size: inherit !important;
     }
+    .embed .embed-description { color: hsla(0,0%,100%,.6); }
 
     .embed .image { margin: auto !important; }
     .embed .embed-content { margin-bottom: 5px; }
