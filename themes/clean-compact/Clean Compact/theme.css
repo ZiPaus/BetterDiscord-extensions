@@ -1,0 +1,1093 @@
+//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.6.2"}*//
+
+/*
+    Installation
+    ------------
+    1. Save this file in %appdata%/BetterDiscord/themes
+    2. Refresh Discord (ctrl+R) or simply restart it
+    3. Go to Settings > BetterDiscord > Themes and enable the theme (might need another refresh after enabling)
+
+    Changelog
+    ---------
+    v1.5.0 (April 3rd 2016): Initial release
+    v1.5.x: Bug fixes, small improvements all-around
+    v1.5.4: Changed bg image
+    v1.5.6: Support for the new search
+    v1.5.7: Minor bugfixes
+    v1.5.8: Embed fixes
+    v1.6.0 (May 5th 2017): New & improved look - less borders, more background shades.
+    v1.6.1 Cozy mode improvements
+    v1.6.2 Fixed memberlist loading indicator, other small tweaks
+ */
+
+
+/******************************** General ********************************/
+
+    /**
+     * Common font sizes
+     */
+
+    /* General */
+    a, abbr, acronym, address, applet, big, blockquote, body, caption, cite, code, dd, del, dfn, div, dl, dt, em, fieldset, form, h1, h2, h3, h4, h5, h6, html, iframe, img, ins, kbd, label, legend, li, object, ol, p, pre, q, s, samp, small, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, ul, var { font-size: 12px !important }
+    /* Message timestamp */
+    .message-group.compact .timestamp span { font-size: 12px !important; }
+    /* Message (sender, content) */
+    .message-text .markup span,
+    .message-text .markup .user-name { font-size: 13px !important; }
+
+    /* Background image */
+    .app {
+        /*background: url(https://i.imgur.com/38O9SOp.jpg);*/
+        background-size: cover !important;
+        /*background-position: 50% 50% !important;*/
+    }
+
+    /* Adds a black background to the bottom 100px */
+    .app > .flex-spacer,
+    #friends .friends-table .friends-table-body { background: rgb(17,17,17) !important; }
+
+    /**
+     * Background colors
+     */
+
+    /* Container transparency */
+    .links,
+    .chat,
+    .typing,
+    .content,
+    .guild-channels,
+    .private-channels,
+    .divider,
+    .divider-red span,
+    .messages-wrapper,
+    #rtc-connection,
+    .channel-textarea textarea,
+    .friends-table,
+    .guild-channels .channel-text.selected,
+    .private-channels .channel.selected,
+    .guilds-add,
+    .message-group .mentioned .message-text,
+    .message-group .comment .markup pre {
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+
+    .account,
+    .account .btn,
+    #rtc-connection .btn,
+    .help-container,
+    .messages-wrapper .messages .divider span {
+        background: transparent !important;
+        background-color: transparent !important;
+        box-shadow: none;
+    }
+
+    /* Chat section header, server list */
+    .guilds-wrapper {
+        background: rgb(32,32,32) !important;
+        /*border-bottom: 1px solid #1c1e22 !important;*/
+    }
+
+    .chat .title-wrap {
+        background: rgb(27,27,27) !important;
+    }
+
+    /* Text / voice channels, friends tab content area */
+    .channels-wrap,
+    #friends {
+        background:rgb(22,22,22) !important;
+    }
+
+    /* Chat */
+    .content .flex-spacer { background: rgb(17,17,17); }
+
+    /* Channel user list */
+    .channel-members { background: rgb(22,22,22) !important; }
+
+    /* Channel use list loading indicators */
+    .channel-members-loading { background: rgba(35,35,35,0.2) !important; }
+    .channel-members-loading .member,
+    .channel-members-loading .heading { background-image: none !important; }
+
+    .guild-header ul { opacity: 0; top: 54px; }
+
+    /* Channel, user etc. hover effect */
+    .private-channels .channel:hover,
+    .guild-channels .channel-text:hover,
+    .guild-channels .channel-voice .channel-arrow:hover,
+    #friends .friends-table .friends-row:hover {
+        background: rgba(255,255,255,0.02) !important;
+    }
+
+    /* Scroller */
+    /* Scroller piece */
+    .scroller-wrap .scroller::-webkit-scrollbar-thumb {
+        border-color: rgb(17,17,17) !important;
+        background: rgb(30,30,30) !important;
+    }
+
+    /* Whole bar */
+    .scroller-wrap .scroller::-webkit-scrollbar-track-piece {
+        background-color: transparent !important;
+        border-color: transparent !important;
+    }
+
+
+/******************************** Server list ********************************/
+
+
+    /* Wrapper / container */
+    .guilds-wrapper {
+        width: 60px;
+        transition: width 150ms;
+        /*border-right: 1px solid #1c1e22;*/
+    }
+    .guilds-wrapper .guilds {
+        width: 60px;
+        padding: 14px 9px;
+        overflow-x: hidden;
+        position: relative;
+    }
+
+    #bd-pub-li .guild-inner a { border-color: transparent !important; }
+    .guilds .guild .badge {
+        z-index: 3;
+        border-radius: 10px;
+        font-size: 9px !important;
+        padding: 6px 5px 6px 4px;
+        line-height: 0px;
+        left: 1px;
+        top: 29px;
+        right: initial !important;
+        text-align: center;
+        color: #fff;
+        opacity: 0.8;
+        font-weight: 600;
+    }
+    .guilds .guild:not(:first-of-type) .badge,
+    .guilds .dms .guild .badge {
+        opacity: 1;
+        left: 27px;
+    }
+
+    .guilds .guild .avatar-small {
+        z-index: 2;
+    }
+
+    /* Server buttons */
+    .guilds .friends-online {
+        font-size: 10px !important;
+        width: 13px !important;
+        height: 13px !important;
+        text-indent: 4px;
+        line-height: 13px;
+        white-space: nowrap;
+        margin: 5px 0;
+        position: absolute;
+        overflow: hidden;
+        top: 30px;
+        left: 35px;
+        background: #738BD7;
+        color: white !important;
+        border-radius: 50%;
+        letter-spacing: 3px;
+        opacity: 0.8;
+        border: 2px solid rgb(40, 40, 40);
+        z-index: 2;
+    }
+
+    .guilds-error { width: 35px; height: 35px; line-height: 32px; margin-left: 3px; }
+    .guilds .guild, .guilds .guild .guilds-error { width: 35px !important; height: 35px !important; line-height: 35px !important; background-size: 35px 35px !important; }
+    .guilds .guild:first-of-type:hover ~ .friends-online, .guilds .guild:first-of-type.active ~ .friends-online { opacity: 1; }
+    .guilds .guild .avatar-small { width: 35px !important; height: 35px !important; background-size: 35px 35px !important; }
+    .guilds .guild .guild-inner a {
+        width: 35px !important;
+        height: 35px !important;
+        background-size: 35px 35px !important;
+        border-radius: 50% !important;
+        overflow: hidden;
+        border: 2px solid rgba(255,255,255,0.15);
+        position: relative;
+    }
+    .guilds .friends-icon {
+        width: 25px !important;
+        height: 25px !important;
+        background-size: 25px 25px !important;
+        top: 7px;
+        left: 5px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .guilds .guild .guild-inner {
+        line-height: 35px !important;
+        border-radius: 50% !important;
+        background: transparent !important;
+        width: 45px;
+        overflow: visible;
+    }
+    .guilds-wrapper .guilds .guild.audio .guild-inner:after {
+        left: 8px;
+        bottom: 5px;
+        background-size: 16px;
+        right: initial;
+        top: initial;
+    }
+
+    .guilds-wrapper .guild-separator { height: 8px !important; }
+    .guilds-wrapper .guild-separator:after {
+        background: rgba(115,139,215,0.4);
+        left: 10%;
+        right: 35%;
+    }
+
+    .guilds-add {
+        font-size: 25px !important;
+        line-height: 50% !important;
+        margin: 5px 0 0 2px;
+    }
+
+    .guilds .audio .guild-inner::after {
+        width: 18px;
+        height: 18px;
+    }
+
+    .guilds-wrapper .guilds .guild.selected:before { display: none; }
+
+    .guilds .guild-inner::before {
+        content: " ";
+        position: absolute;
+        height: 42px !important;
+        width: 16px;
+        padding-left: 29px;
+        padding-right: 5px;
+        background: transparent !important;
+        margin-top: 0 !important;
+        top: -1px;
+        left: -70px !important;
+        border-radius: 0 21px 21px 0 !important;
+        transition: left 250ms; transition: padding 250ms;
+    }
+
+    .guilds .guild:hover .guild-inner::before {
+        left: -45px !important;
+        padding-right: 42px;
+        margin-top: 0;
+        border-radius: 0 20px 20px 0;
+        background: rgba(115, 139, 215, 0.2) !important;
+    }
+
+    .guilds .guild.selected .guild-inner a { border-color: #E2E2E2; }
+    .guilds .guild.selected .guild-inner::before {
+        left: -45px !important;
+        padding-right: 41px;
+        border-radius: 0 20px 20px 0;
+        background: #738bd7 !important;
+        transition: background 350ms;
+    }
+
+    .guilds .guild.unread:not(.active) .guild-inner::after {
+        content: "💬";
+        position: absolute;
+        z-index: 2;
+        top: -15px !important;
+        right: -14px;
+        color: white;
+        background: none !important;
+        width: initial;
+        height: initial;
+        text-shadow: -2px 4px 0px #000;
+        animation-name: zoomAppear;
+        animation-duration: .2s;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-in-out;
+    }
+
+    /* Help button @ bottom left corner */
+    .help-container::after { background: none; }
+
+
+/************************* Text/voice channel section *************************/
+
+    .channels-wrap {
+        width: 130px !important;
+        /*border-right: 1px solid #1c1e22;*/
+        transition: width 150ms;
+        position: relative;
+    }
+
+    .channels-wrap .scroller-wrap { width: 143px !important; }
+
+    .guild-channels { padding: 0; }
+
+    /* Voice & text channel icons (instant invite, edit channel, arrow) */
+    .guild-channels .icon,
+    .guild-channels .channel-voice .channel-arrow {
+        width: 12px;
+        height: 12px;
+        background-size: 12px 12px;
+    }
+
+    .guild-header header,
+    .private-channels .search-bar {
+        padding: 15px;
+        box-shadow: none;
+        /*border-bottom: 1px solid #1c1e22;*/
+        box-sizing: border-box;
+    }
+
+    .guild-header header,
+    .private-channels .search-bar { height: 54px; background: rgb(27,27,27) !important; }
+    .guild-header header span {
+        white-space: normal;
+        line-height: 100%;
+    }
+
+    .guild-channels .channel-text .channel-name:before { color: #738bd7 !important; }
+    .guild-channels .channel-text .badge {
+        margin-left: -15px;
+        position: absolute;
+        right: 22px;
+    }
+
+    .guild-channels .channel-text a {
+        padding: 6px;
+        box-sizing: border-box;
+    }
+
+    .guild-channels .channel-text.unread:not(.selected):not(.channel-muted)::before {
+        top: 7px;
+        left: -7px;
+    }
+
+    .guild-channels header {
+        padding: 0 5px;
+        margin: 5px 0 0;
+        border-top: 2px solid rgba(0,0,0,0.14);
+        text-align: center;
+    }
+    .guild-channels header:nth-of-type(2) {
+        margin: 15px 0 0;
+    }
+    .guild-channels header span {
+        white-space: nowrap;
+    }
+
+    .guild-channels .channel-text a { padding 5px; }
+    .guild-channels .channel-voice {	padding: 5px 5px 5px 8px; }
+    .guild-channels .channel-voice-states {
+        padding-left: 0;
+        margin-top: 0;
+    }
+
+    .guild-channels .channel-text.unread:not(.selected):not(.channel-muted)::before {
+        content: "💬";
+        background: none;
+        width: 0;
+        height: 0;
+        border: none;
+        opacity: 1;
+        position: absolute;
+        left: initial;
+        right: 20px;
+        top: 6px;
+        animation-name: zoomAppear;
+        animation-duration: .2s;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-in-out;
+    }
+
+    .guild-channels .channel-voice .channel-arrow {
+        margin-right: 2px;
+        margin-left: -5px;
+        display: none;
+    }
+
+    .guild-channels .channel-voice.audio .channel-arrow { display: block; }
+    .guild-channels .channel-voice.audio .channel-arrow:hover {
+        color: white;
+    }
+    .guild-header ul a { margin: 0; }
+    .guild-header.guild-header-open ul {
+        opacity: 1;
+        background: rgba(0,0,0,0.98);
+        border-bottom: 1px solid #1c1e22;
+    }
+
+    #rtc-connection {
+        position: relative;
+        padding: 7px 10px;
+        overflow: hidden;
+        border-top: none;
+        background: rgb(27,27,27) !important;
+    }
+    #rtc-connection .rtc-connection-status { font-size: 0.9em !important; }
+    #rtc-connection .rtc-connection-channel { margin-right: 0; margin-top: 6px; }
+    #rtc-connection .btn-group {
+        background: rgb(27,27,27);
+        position: absolute;
+        padding: 10px 7px 9px 5px;
+        right: -58px;
+        transition: right 150ms;
+        overflow: hidden;
+        z-index: 2;
+        bottom: initial;
+        top: 0;
+    }
+    #rtc-connection:hover .btn-group,
+    #rtc-connection .btn-group:hover {
+        right: 0;
+    }
+    #rtc-connection .btn {
+        width: 22px;
+        height: 22px;
+    }
+    #rtc-connection .btn {
+        margin-right: 0;
+    }
+    .account {
+        background: rgb(27,27,27) !important;
+        height: 74px !important;
+        padding: 0 2px 12px !important;
+        align-items: flex-end !important;
+        border-top: none;
+    }
+    .account .avatar-small { margin-left: 5px; display: block !important; }
+    .account .btn-group {
+        position: absolute;
+        left: 0;
+        bottom: 50px;
+        /*border-bottom: 1px solid #1c1e22 !important;*/
+        width: 130px;
+        border-radius: 0;
+        justify-content: space-around;
+        display: flex;
+        padding-left: 2px;
+    }
+
+    .account .btn {
+        display: block;
+        width: 22px;
+        height: 22px;
+    }
+
+    .account .btn-group,
+    #rtc-connection .btn-group {
+        border: none;
+    }
+
+    .account .btn, #rtc-connection .btn {
+        box-shadow: none !important;
+        border-right: 0 !important;
+    }
+
+    .account .account-details .discriminator { opacity: 0.5; }
+    .account .account-details .discriminator:hover { opacity: 1; }
+    .account .account-details .discriminator span:first-of-type { color: #738bd7; }
+
+    .links { padding: 75px 10px 20px; }
+
+
+/******************************* Top bar (channel name, description, buttons, search etc.) *******************************/
+
+
+    .chat .title-wrap .header-toolbar { position: relative; }
+
+    .chat .title-wrap .header-toolbar button {
+        background: transparent;
+        width: 25px;
+        height: 25px;
+        margin-top: 2px;
+    }
+
+    .chat .header-toolbar button:first-of-type {
+        margin-right: 7px;
+    }
+
+    .chat .header-toolbar button:first-of-type:after {
+        content: " ";
+        border-right: 1px solid hsla(0,0%,85%,.1);
+        position: absolute;
+        width: 1px;
+        height: 75%;
+        left: 30px;
+        top: 4px;
+    }
+
+    .chat .title-wrap .header-toolbar button span {
+        width: 25px;
+        height: 25px;
+        background-size: 23px;
+    }
+
+    .search .search-bar {
+        background-color: rgb(35,35,35) !important;
+    }
+
+    .search-bar .search-bar-inner {
+        width: 100px;
+    }
+
+    .win-buttons {
+        right: 12px;
+    }
+
+
+/******************************* Text chat section *******************************/
+
+    .chat form {
+        margin: 0;
+        padding: 0 20px;
+        background: rgb(22,22,22);
+        border-top: none !important;
+    }
+
+    .chat form .typing { padding-left: 20px; }
+
+    /* Message section header */
+    .chat > .title-wrap {
+        min-height: 54px;
+        box-shadow: none;
+        border-bottom: none !important;
+    }
+    .chat .title-wrap .channel-name { color: #fff; }
+    .chat > .title-wrap > .title .channel-name::before { color: #738BD7; }
+
+    /* Message textarea */
+    .channel-textarea { margin: 10px 0 30px; }
+    .channel-textarea-inner { background-color: hsla(0,0%,100%,.04) !important; border-color: rgba(255, 255, 255, 0.04); }
+    .channel-textarea-inner textarea { color: hsla(0,0%,100%,.7); }
+    .channel-textarea-upload { border-color: #1c1e22; }
+
+    /* Message styling */
+    .message-group {
+        padding: 5px 0;
+        margin-left: 10px;
+        margin-right: 0;
+        border-bottom: none;
+        overflow: hidden;
+    }
+
+    .message-group .comment { margin-right: 5px; }
+    .message-group .message { position: relative; }
+    .message-group.compact { margin-left: 5px; }
+    .message-group.compact .comment .markup { padding-left: 75px; text-indent: -75px; }
+    .message-group.compact .bot-tag { margin: 0 3px 0 0 !important; line-height: 22px; }
+    .message-group .comment .markup {
+        min-height: 25px;
+        line-height: 25px;
+        color: rgba(255, 255, 255, 0.7);
+        margin-top: 0;
+    }
+    .message-group.compact .comment .markup { margin-bottom: 0; }
+    .message-group .embed { background: rgb(27,27,27); border: none !important; }
+    .message-group .embed-field .markup { margin-top: 0; }
+    .message-group .message .markup a { white-space: pre; }
+
+    .message-group .avatar-large {
+        margin-top: 0;
+        margin-right: 12px;
+        width: 30px;
+        height: 30px;
+        background-size: 30px 30px;
+    }
+
+    .message-group.compact .accessory { padding-left: 68px; }
+    .message .btn-option { position: relative; z-index: 3 !important; }
+
+    .reaction { background: rgb(27,27,27) !important; transition: background 150ms; }
+    .reaction:hover { background: rgb(37,37,37) !important; }
+
+    /* Emote menu */
+    .channel-textarea-emoji > .sprite-item {
+        background-image: url(https://static-cdn.jtvnw.net/emoticons/v1/81249/1.0) !important;
+        transform: scale(0.8);
+        opacity: 0.8;
+        transition: all 150ms;
+        width: 30px;
+        height: 30px;
+        background-size: 30px 30px !important;
+        background-position: initial !important;
+    }
+    .channel-textarea-emoji.popout-open > .sprite-item,
+    .channel-textarea-emoji > .sprite-item:hover {
+        background-image: url(https://static-cdn.jtvnw.net/emoticons/v1/81248/1.0) !important;
+        transform: scale(1) !important;
+        opacity: 1;
+    }
+
+    /* Emoji */
+    .emoji {
+        height: 25px !important;
+        width: 25px !important;
+        line-height: 25px !important;
+    }
+
+    /* Expanded description */
+    .chat .title-wrap .topic .topic-full {
+        background-color: rgba(0,0,0,0.98) !important;
+        border-bottom: none;
+        box-shadow: none;
+    }
+
+    /* Chat @mention highlight */
+    .message-group .mentioned .message-text {
+        border-radius: 2px;
+        border: solid #faa61a;
+        border-width: 0 4px 0 0;
+    }
+
+    .chat .divider { height: 10px !important; }
+    .chat .divider > div { background: #474a4f; }
+    .chat .messages-wrapper, .chat .messages-wrapper .scroller-wrap { padding-bottoM: 3px; }
+    .messages-wrapper .messages .divider:not(.red) span { border-radius: 3px; }
+    .message-group .markup pre { display: inline-block; }
+    .message-group .markup pre code { background: rgba(255,255,255,0.05) !important; }
+    .messages-wrapper .messages .embed { border-color: rgba(242, 242, 242, 0.1) !important; }
+
+    /* Messages from blocked people */
+    .friends-table .messages .message-group-blocked,
+    .messages-wrapper .messages .message-group-blocked {
+        display: none;
+    }
+
+    /**
+     * Twitch emotes
+     * Absolute positioning to avoid having to scroll when new messages have emotes
+     */
+    img.emote {
+        position: absolute;
+        bottom: -10px;
+        max-height: 28px;
+    }
+
+    .emotewrapper { line-height: 8px; }
+
+    /* to avoid clipping */
+    .emotewrapper::before {
+        content: " ";
+        display: block;
+        width: 28px;
+    }
+
+    /* Spoiler messages */
+    .spoiler { line-height: 0; }
+    .spoiler > span {
+        display: flex;
+        position: relative;
+        top: -21px;
+        max-height: 25px;
+    }
+
+    .spoiler::before {
+        position: absolute;
+        background: rgba(0,0,0,0.7);
+        border-radius: 6px;
+        border: 1px solid rgba(255,255,255,0.2);
+        height: 25px;
+        min-height: 25px;
+        width: 100%;
+        line-height: 25px;
+        padding-top: 0;
+        top: 15px;
+    }
+
+    .compact .spoiler:before {
+        width: 86%;
+        top: 0;
+    }
+
+    /* Highlight */
+    .highlight { background: #1c1e22; }
+
+    /* Compact message styling */
+    .message-group.compact { padding: 0 !important; }
+    .message-group.compact .message { margin: 3px 0; line-height: 25px; }
+    .message-group.compact .timestamp { line-height: 15px; color: #d1d9de; }
+    .message-group.compact .timestamp:hover { line-height: 15px; color: #99aab5 !important; }
+
+    /* Embedded previews etc */
+    .embed .embed-provider,
+    .embed .embed-author,
+    .embed .embed-title  {
+        margin-bottom: 0;
+    }
+
+    .embed .embed-provider,
+    .embed .embed-author,
+    .embed .embed-title,
+    .embed .embed-field-name,
+    .embed .embed-field-value,
+    .embed .embed-description.markup {
+        font-size: inherit !important;
+    }
+    .embed .embed-description { color: hsla(0,0%,100%,.6); }
+
+    .embed .image { margin: auto !important; }
+    .embed .embed-content { margin-bottom: 5px; }
+    .embed .embed-fields .embed-field .embed-field-name { margin-bottom: -5px; }
+    .embed .embed-fields .embed-field { padding-top: 0; }
+
+
+/****************************** Server user list section ******************************/
+
+    .header-toolbar .separator.separator-win { margin-right: 103px; }
+
+    .channel-members {
+        width: 105px;
+        min-width: 0 !important;
+        padding: 0;
+        overflow-x: hidden;
+        transition: width 150ms;
+        /* Workaround for Discord's lazy rendering (rendering calculations are based on the original container height, so some members would not render since the containers are smaller with this theme) */
+        padding-bottom: 125px !important;
+    }
+
+    .channel-members-wrap {
+        width: 110px;
+        min-width: 0 !important;
+        display: flex !important;
+        /*border-left: 1px solid #1c1e22;*/
+        transition: width 150ms;
+    }
+
+    /* Channel's user list group labels */
+    .channel-members h2 {
+        position: relative;
+        padding: 0 0 2px 0;
+        width: 100px;
+        letter-spacing: .001em;
+        border-bottom: 1px solid #738bd7;
+        margin-left: 7px;
+        transition: width 150ms;
+    }
+
+    .channel-members h2 {
+        display: inline-flex;
+        white-space: nowrap;
+    }
+    .channel-members h2:hover {
+        white-space: normal;
+    }
+
+    .channel-members .member .member-activity {
+        font-size: 0px !important;
+    }
+    .channel-members .member .member-activity strong {
+        white-space: normal;
+        font-size: 9px !important;
+        max-height: 10px;
+        display: inline-block;
+        overflow: hidden;
+        width: 50px;
+        transition: all 250ms;
+    }
+    .channel-members .member:hover .member-activity strong { max-height: 100px; }
+    .channel-members .member:hover { background: rgba(115, 139, 215, 0.15) !important; }
+    .channel-members .member.popout-open { background: rgba(115, 139, 215, 0.25) !important; }
+    .channel-members .member.popout-open:hover { background: rgba(115, 139, 215, 0.35); }
+
+    .channel-members .member {
+        color: hsla(0,0%,100%,.9) !important;
+        padding: 1px 0 1px 10px;
+        box-sizing: border-box;
+        margin-bottom: 5px;
+        border-bottom: 1px solid rgba(0,0,0,0.14);
+        position: relative;
+        width: 110px;
+        overflow: visible;
+    }
+
+    .channel-members .member .member-inner {
+        width: 80px;
+        padding: 0 0 0 8px;
+        box-sizing: border-box;
+    }
+
+    .member-username[style*="color:#010000"] { color: #fff !important; }
+
+    .member-username .bot-tag {
+        display: block !important;
+        position: absolute;
+        left: 15px;
+        z-index: 2;
+        font-size: 8px !important;
+        top: 65%;
+        padding: 0 2px;
+        height: 15px;
+    }
+
+    .channel-members .member + h2 {
+        margin-top: 20px;
+    }
+
+    /* User image @ channel's user list */
+    .channel-members .avatar-small {
+        width: 20px;
+        height: 20px;
+        background-size: 20px 20px;
+        margin-right: 0;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Online status indicator */
+    .channel-members .avatar-small .status {
+        top: 65%;
+        right: -4px;
+        border: 2px solid #1c1e22;
+        z-index: 3;
+    }
+
+    /* Offline user */
+    .channel-members .member.member-status-offline .member-inner {
+        padding: 0 0 0 5px;
+    }
+
+    .channel-members .member.member-status-offline::before,
+    .channel-members .member.member-status-offline::after { display: none !important; }
+
+    .channel-members .member.member-status-offline .avatar-small {
+        height: 0;
+        width: 0;
+        background-size: 0 0;
+    }
+
+    /* Typing indicator */
+    .status-typing {
+        width: 26px !important;
+        right: -11px !important;
+        overflow: hidden;
+        right: -5px !important;
+    }
+
+
+/******************************* Search tab **********************************/
+
+
+    .search-results-wrap {
+        background-color: rgb(22,22,22) !important;
+    }
+
+    .search-results-wrap .scroller-wrap .scroller {
+        padding: 10px !important;
+    }
+
+    .search-results-wrap .search-header {
+        background-color: rgba(0,0,0,0.05) !important;
+        box-shadow: 0 1px 2px rgba(200,200,200,.3) !important;
+    }
+
+    .search-result {
+        border: solid rgba(255,255,255,0.1) !important;
+        border-width: 0 0 1px !important;
+    }
+
+    .search-results-wrap .search-result:before {
+        background-image: none !important;
+    }
+
+    .search-results-wrap .search-result:after {
+        background-image: none !important;
+    }
+
+    .search-results-wrap .search-result .hit {
+        box-shadow: none !important;
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    }
+
+    .search-results-wrap .search-result.expanded .search-result-message.hit {
+        background-color: rgb(35,35,35) !important;
+    }
+
+    .search-results-wrap .channel-separator {
+        text-align: center !important;
+    }
+
+    .search-results-wrap .channel-separator .channel-name {
+        background-color: transparent !important;
+        color: #738bd7 !important;
+    }
+
+    .search-results-wrap .action-buttons .jump-button {
+        background-color: #738bd7 !important;
+    }
+
+/******************************* Friends tab **********************************/
+
+    #friends .friends-table { background: rgb(17,17,17); margin-top: 0; }
+    #friends .friends-table .friends-table-header { background: rgb(17,17,17); }
+
+    #friends .friends-header,
+    #friends .friends-table .friends-table-header,
+    #friends .friends-table .friends-row + .friends-row {
+        border: none;
+    }
+
+    #friends .friends-header {
+        height: 53px;
+        background: rgb(25,25,25) !important;
+        border-bottom: none !important;
+    }
+
+    #friends .friends-table .friends-row {
+        height: 45px !important;
+        padding-left: 15px;
+        margin-left: 0;
+        padding-right: 12px;
+        margin-right: 0;
+        transition: padding 150ms;
+    }
+
+    #friends .friends-table .friends-row:hover {
+        margin: 0 0;
+        padding: 0 0;
+        padding-left: 20px !important;
+    }
+
+    .private-channels .channel { padding-left: 10px; padding-right: 6px; }
+    .private-channels .channel a { padding-left: 0; }
+    .private-channels .channel a .avatar-small {
+        width: 25px;
+        height: 25px;
+        background-size: 25px;
+        border-radius: 50%;
+        margin-right: 8px;
+    }
+    .private-channels .channel a .channel-game {
+        white-space: normal;
+        overflow: initial;
+        text-overflow: initial;
+    }
+    .private-channels .channel a .channel-game > span { display: none !important; }
+    .private-channels .channel a .channel-name { max-height: 25px; transition: all 150ms; }
+    .private-channels .channel a:hover .channel-name { max-height: 150px !important; }
+    .private-channels .channel a .channel-game strong span { font-size: 9px !important; }
+
+    .friends-table .messages .message-group.compact .user-name,
+    .messages-wrapper .messages .message-group.compact .user-name {
+        color: #f9f9f9;
+    }
+
+    .friends-table .messages .message-group .comment .markup code.inline,
+    .friends-table .messages .message-group .comment .markup pre code,
+    .messages-wrapper .messages .message-group .comment .markup code.inline {
+        background: #2e3136 !important;
+    }
+
+    .friends-table .messages .message-group.compact .timestamp,
+    .messages-wrapper .messages .message-group.compact .timestamp {
+        color: rgba(255, 255, 255, 0.2) !important;
+    }
+
+    .friends-table .messages .message-group.compact .timestamp:hover,
+    .messages-wrapper .messages .message-group.compact .timestamp:hover {
+        color: #99aab5 !important;
+    }
+
+
+/********************************* Settings *********************************/
+
+    .channel-notification-settings .flex-spacer {
+        background: initial !important;
+    }
+
+
+/***************************** Modal (channel description) **************************/
+
+    /* Header */
+    .markdown-modal .markdown-modal-header {
+        margin: 0;
+        padding: 16px;
+    }
+
+    /* Close btn */
+    .markdown-modal .markdown-modal-header .markdown-modal-close {
+        top: 40%;
+    }
+
+    /* Content */
+    .markdown-modal .scroller-wrap .scroller {
+        padding: 16px 16px 32px;
+    }
+
+
+/********************* BetterDiscord Minimal Mode support **********************/
+
+    .bd-minimal .guilds-wrapper { width: 45px !important; }
+    .bd-minimal #bd-pub-li { line-height: 20px !important; }
+    .bd-minimal .guilds .friends-icon {
+        top: 0;
+        left: 0;
+    }
+
+    .bd-minimal .guilds .friends-icon, .bd-minimal .guilds .guild, .bd-minimal .guilds .guild .avatar-small, .bd-minimal .guilds .guild .guild-inner, .bd-minimal .guilds .guild .guild-inner a {
+        width: 20px !important;
+        height: 20px !important;
+        background-size: 100% !important;
+        font-size: 15px !important;
+        line-height: 20px !important;
+    }
+
+    .bd-minimal .guilds .friends-online {
+        width: 20px !important;
+        height: 20px !important;
+        line-height: 20px !important;
+        margin-left: -5px;
+    }
+
+    .bd-minimal .guilds .guild.selected .guild-inner::before,
+    .bd-minimal .guilds .guild:hover .guild-inner::before {
+        height: 24px !important;
+        width: 20px !important;
+        left: -65px !important;
+        top: 0;
+        margin-top: 0;
+    }
+
+    /* Unread messages icon */
+    .guild.unread::before { display: none; }
+    .guilds .guild.unread:not(.active) .guild-inner::after { top: -10px; }
+
+    .bd-minimal .theme-dark .comment { border-left: none; }
+
+    .bd-minimal .channel-members-wrap { width: 80px; }
+    .bd-minimal .channel-members { width: 80px; }
+    .bd-minimal .channel-members .member { padding: 0; }
+    .bd-minimal .channel-members .member .member-inner { padding: 1px 8px; }
+
+    /* User list online status indicator */
+    .bd-minimal .channel-members .avatar-small .status { top: 11px !important; }
+
+    .bd-minimal .account .username { display: block; }
+
+    .bd-minimal .channel-members .avatar-small .status-typing {	width: 17px !important;	}
+
+
+
+/********************************* Other BetterDiscord overwrites *********************************/
+
+    /* BetterDiscord Public servers button */
+    #bd-pub-li { line-height: 35px !important; }
+    #bd-pub-li .guild-inner,
+    #bd-pub-button {
+        line-height: 35px !important;
+        height: 35px !important
+    }
+
+    #bd-ps-header { height: 40px; }
+    #bd-ps-header h2, #bd-ps-header span { line-height: 40px; }
+
+    #bd-ps-body { top: 41px; }
+    #bd-ps-body table tr, #bd-ps-body table th { height: 40px; }
+    #bd-ps-body tr td button { margin-top: 1px !important; }
+
+
+/****************************************** Animations *****************************************/
+
+@-webkit-keyframes zoomAppear {
+    0% 		{ transform: scale(0); }
+    /*75% 	{ transform: scale(1.4); }*/
+    100% 	{ transform: scale(1); }
+}
