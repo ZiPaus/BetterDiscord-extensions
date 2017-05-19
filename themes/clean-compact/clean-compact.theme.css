@@ -1,4 +1,4 @@
-//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.6.4"}*//
+//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.6.5"}*//
 
 /*
     Installation
@@ -20,6 +20,7 @@
     v1.6.2 Fixed memberlist loading indicator, other small tweaks
     v1.6.3 Embed fixes (cozy mode paddings), message timestamp lineheight fix, modal font sizes
     v1.6.4 @mentioned highlight improvements, invitation button bg color
+    v1.6.5 Tweaks with comment blocks etc. background colors
  */
 
 
@@ -59,8 +60,7 @@
     .friends-table,
     .guild-channels .channel-text.selected,
     .private-channels .channel.selected,
-    .guilds-add,
-    .message-group .comment .markup pre {
+    .guilds-add {
         background: transparent !important;
         background-color: transparent !important;
     }
@@ -330,7 +330,10 @@
     }
 
     .guild-header header,
-    .private-channels .search-bar { height: 54px; background: rgb(27,27,27) !important; }
+    .private-channels .search-bar {
+        height: 53px;
+        background: rgb(27,27,27) !important;
+    }
     .guild-header header span {
         white-space: normal;
         line-height: 100%;
@@ -590,7 +593,7 @@
         background-size: 30px 30px;
     }
 
-    .message-group.compact .accessory { padding-left: 68px; }
+    .message-group.compact .accessory { padding-left: 92px; }
     .message .btn-option { position: relative; z-index: 3 !important; }
 
     .reaction { background: rgb(27,27,27) !important; transition: background 150ms; }
@@ -643,9 +646,13 @@
     .chat .messages-wrapper, .chat .messages-wrapper .scroller-wrap { padding-bottom: 3px; }
     .messages-wrapper .messages .divider:not(.red) div { background: rgb(47,47,47) !important; }
     .friends-table .messages .divider:before, .friends-table .messages .divider span, .messages-wrapper .messages .divider:before, .messages-wrapper .messages .divider span { background-color: transparent !important; }
-    .message-group .markup pre { display: inline-block; }
-    .message-group .markup pre code { background: rgba(255,255,255,0.05) !important; }
-    .messages-wrapper .messages .embed { border-color: rgba(242, 242, 242, 0.1) !important; }
+    .message-group .comment .markup pre {
+        background: rgb(32,32,32) !important;
+        border-color: rgb(32,32,32) !important;
+        display: inline-block;
+    }
+    .message-group .markup pre code { background: transparent !important; }
+    .messages-wrapper .messages .embed { border-color: rgb(47,47,47) !important; }
 
     /* Messages from blocked people */
     .friends-table .messages .message-group-blocked,
@@ -717,14 +724,22 @@
         margin-bottom: 0 !important;
     }
 
-    .embed { padding: 12px 10px 8px; }
+    .embed {
+        padding: 12px 10px 8px;
+        background-color: rgb(32,32,32) !important;
+    }
+    .message-group .embed-wrapper .embed-color-pill { background-color: rgb(87,87,87) !important; }
     .embed .embed-provider,
     .embed .embed-author,
     .embed .embed-title,
     .embed .embed-field-name,
-    .embed .embed-field-value,
+    .embed .embed-field-value {
+        font-size: inherit !important;
+    }
     .embed .embed-description.markup {
         font-size: inherit !important;
+        padding-left: 0 !important;
+        text-indent: 0 !important;
     }
 
     .embed .embed-description.markup a { display: block !important; }
@@ -927,7 +942,7 @@
 /******************************* Friends tab **********************************/
 
     #friends .friends-table { background: rgb(17,17,17); margin-top: 0; }
-    #friends .friends-table .friends-table-header { background: rgb(17,17,17); }
+    #friends .friends-table .friends-table-header { background: rgb(22,22,22); }
 
     #friends .friends-header,
     #friends .friends-table .friends-table-header,
@@ -937,7 +952,7 @@
 
     #friends .friends-header {
         height: 53px;
-        background: rgb(25,25,25) !important;
+        background: rgb(27,27,27) !important;
         border-bottom: none !important;
     }
 
@@ -983,7 +998,7 @@
     .friends-table .messages .message-group .comment .markup code.inline,
     .friends-table .messages .message-group .comment .markup pre code,
     .messages-wrapper .messages .message-group .comment .markup code.inline {
-        background: #2e3136 !important;
+        background: rgb(32,32,32) !important;
     }
 
     .friends-table .messages .message-group.compact .timestamp,
@@ -1079,7 +1094,12 @@
 /********************************* Other BetterDiscord overwrites *********************************/
 
     /* BetterDiscord Public servers button */
-    #bd-pub-li { line-height: 35px !important; }
+    #bd-pub-li {
+        line-height: 35px !important;
+        margin-top: 10px;
+        height: 50px !important;
+        margin-bottom: -10px;
+    }
     #bd-pub-li .guild-inner,
     #bd-pub-button {
         line-height: 35px !important;
