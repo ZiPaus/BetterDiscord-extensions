@@ -647,8 +647,8 @@
     .messages-wrapper .messages .divider:not(.red) div { background: rgb(47,47,47) !important; }
     .friends-table .messages .divider:before, .friends-table .messages .divider span, .messages-wrapper .messages .divider:before, .messages-wrapper .messages .divider span { background-color: transparent !important; }
     .message-group .comment .markup pre {
-        background: rgb(32,32,32) !important;
-        border-color: rgb(32,32,32) !important;
+        background: rgb(27,27,27) !important;
+        border-color: rgb(27,27,27) !important;
         display: inline-block;
     }
     .message-group .markup pre code { background: transparent !important; }
@@ -726,7 +726,7 @@
 
     .embed {
         padding: 12px 10px 8px;
-        background-color: rgb(32,32,32) !important;
+        background-color: rgb(27,27,27) !important;
     }
     .message-group .embed-wrapper .embed-color-pill { background-color: rgb(87,87,87) !important; }
     .embed .embed-provider,
@@ -998,7 +998,7 @@
     .friends-table .messages .message-group .comment .markup code.inline,
     .friends-table .messages .message-group .comment .markup pre code,
     .messages-wrapper .messages .message-group .comment .markup code.inline {
-        background: rgb(32,32,32) !important;
+        background: rgb(27,27,27) !important;
     }
 
     .friends-table .messages .message-group.compact .timestamp,
