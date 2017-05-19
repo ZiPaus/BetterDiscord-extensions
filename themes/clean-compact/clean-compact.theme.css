@@ -1,4 +1,4 @@
-//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.6.3"}*//
+//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.6.4"}*//
 
 /*
     Installation
@@ -19,6 +19,7 @@
     v1.6.1 Cozy mode improvements
     v1.6.2 Fixed memberlist loading indicator, other small tweaks
     v1.6.3 Embed fixes (cozy mode paddings), message timestamp lineheight fix, modal font sizes
+    v1.6.4 @mentioned highlight improvements, invitation button bg color
  */
 
 
@@ -59,7 +60,6 @@
     .guild-channels .channel-text.selected,
     .private-channels .channel.selected,
     .guilds-add,
-    .message-group .mentioned .message-text,
     .message-group .comment .markup pre {
         background: transparent !important;
         background-color: transparent !important;
@@ -548,12 +548,12 @@
     .chat > .title-wrap > .title .channel-name::before { color: #738BD7; }
     .chat .jump-to-present-bar { background-color: rgb(47,47,47) !important; }
     .chat .jump-to-present-bar:hover { background-color: rgb(57,57,57) !important; }
-    .chat .jump-to-present-bar button { color: #738BD7 !important; }
+    .chat .jump-to-present-bar button { color: #FFF !important; }
 
     /* Message textarea */
     .channel-textarea { margin: 10px 0 30px; }
     .channel-textarea-inner { background-color: hsla(0,0%,100%,.04) !important; border-color: rgba(255, 255, 255, 0.04); }
-    .channel-textarea-inner textarea { color: hsla(0,0%,100%,.7); }
+    .channel-textarea-inner textarea { color: hsla(0,0%,100%,.7); font-size: 1rem !important; }
     .channel-textarea-upload { border-color: #1c1e22; }
 
     /* Message styling */
@@ -580,6 +580,7 @@
     .message-group .embed { background: rgb(27,27,27); border: none !important; }
     .message-group .embed-field .markup { margin-top: 0; }
     .message-group .message .markup a { white-space: pre; }
+    .message-group .mentioned .message-text { background: rgb(27,27,27) !important; }
 
     .message-group .avatar-large {
         margin-top: 0;
@@ -628,7 +629,10 @@
     }
 
     /* Chat @mention highlight */
+    .message-group .mentioned.first .message-text { margin-top: 5px !important; }
+    .message-group.compact .mentioned.first .message-text { margin-top: 0 !important; }
     .message-group .mentioned .message-text {
+        padding: 1px 3px !important;
         border-radius: 2px;
         border: solid #faa61a;
         border-width: 0 4px 0 0;
@@ -731,6 +735,8 @@
     .embed .embed-fields .embed-field .embed-field-name { margin-bottom: -5px; }
     .embed .embed-fields .embed-field { padding-top: 0; }
     .embed .embed-thumbnail { margin-top: 5px; }
+
+    .invite-button { background-color: rgb(42,42,42) !important; }
 
 
 /****************************** Server user list section ******************************/
