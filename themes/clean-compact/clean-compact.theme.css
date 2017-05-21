@@ -1,4 +1,4 @@
-//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.6.5"}*//
+//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.6.6"}*//
 
 /*
     Installation
@@ -21,6 +21,7 @@
     v1.6.3 Embed fixes (cozy mode paddings), message timestamp lineheight fix, modal font sizes
     v1.6.4 @mentioned highlight improvements, invitation button bg color
     v1.6.5 Tweaks with comment blocks etc. background colors
+    v1.6.6 Friends online badge fix, divider changes
  */
 
 
@@ -31,7 +32,8 @@
      */
 
     /* General */
-    a, abbr, acronym, address, applet, big, blockquote, body, caption, cite, code, dd, del, dfn, div, dl, dt, em, fieldset, form, h1, h2, h3, h4, h5, h6, html, iframe, img, ins, kbd, label, legend, li, object, ol, p, pre, q, s, samp, small, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, ul, var, .modal * { font-size: 12px !important }
+    /*a, abbr, acronym, address, applet, big, blockquote, body, caption, cite, code, dd, del, dfn, div, dl, dt, em, fieldset, form, h1, h2, h3, h4, h5, h6, html, iframe, img, ins, kbd, label, legend, li, object, ol, p, pre, q, s, samp, small, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, ul, var, .modal *, .chat .new-messages-bar button:first-child { font-size: 12px !important }*/
+    * { font-size: 12px !important }
     /* Message timestamp */
     .message-group.compact .timestamp span { font-size: 12px !important; }
     /* Message (sender, content) */
@@ -170,20 +172,17 @@
     /* Server buttons */
     .guilds .friends-online {
         font-size: 10px !important;
-        width: 13px !important;
+        width: 15px !important;
         height: 13px !important;
-        text-indent: 4px;
-        line-height: 13px;
-        white-space: nowrap;
-        margin: 5px 0;
+        text-indent: 3px;
         position: absolute;
         overflow: hidden;
         top: 30px;
-        left: 35px;
+        left: 33px;
         background: #738BD7;
         color: white !important;
-        border-radius: 50%;
-        letter-spacing: 3px;
+        border-radius: 5px;
+        word-spacing: 7px;
         opacity: 0.8;
         border: 2px solid rgb(40, 40, 40);
         z-index: 2;
@@ -245,6 +244,7 @@
         height: 18px;
     }
 
+    .guilds-wrapper .guilds .guild+.guild { margin-top: 10px; }
     .guilds-wrapper .guilds .guild.selected:before { display: none; }
 
     .guilds .guild-inner::before {
@@ -543,7 +543,7 @@
 
     /* Message section header */
     .chat > .title-wrap {
-        min-height: 54px;
+        min-height: 53px;
         box-shadow: none;
         border-bottom: none !important;
     }
@@ -596,7 +596,7 @@
     .message-group.compact .accessory { padding-left: 92px; }
     .message .btn-option { position: relative; z-index: 3 !important; }
 
-    .reaction { background: rgb(22,22,22) !important; transition: background 150ms; }
+    .reaction { background: rgb(27,27,27) !important; transition: background 150ms; }
     .reaction:hover { background: rgb(37,37,37) !important; }
 
     /* Emote menu */
@@ -644,6 +644,7 @@
     .chat .divider { height: 10px !important; }
     .chat .divider > div { background: #474a4f; }
     .chat .messages-wrapper, .chat .messages-wrapper .scroller-wrap { padding-bottom: 3px; }
+    .messages-wrapper .messages .divider.divider-red>div { opacity: 1 !important; }
     .messages-wrapper .messages .divider:not(.red) div { background: rgb(47,47,47) !important; }
     .friends-table .messages .divider:before, .friends-table .messages .divider span, .messages-wrapper .messages .divider:before, .messages-wrapper .messages .divider span { background-color: transparent !important; }
     .message-group .comment .markup pre {
@@ -1099,9 +1100,7 @@
     /* BetterDiscord Public servers button */
     #bd-pub-li {
         line-height: 35px !important;
-        margin-top: 10px;
-        height: 50px !important;
-        margin-bottom: -10px;
+        margin: 5px 0 !important;
     }
     #bd-pub-li .guild-inner,
     #bd-pub-button {
