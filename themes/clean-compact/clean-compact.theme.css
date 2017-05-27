@@ -1,4 +1,4 @@
-//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.6.6"}*//
+//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.6.7"}*//
 
 /*
     Installation
@@ -22,6 +22,7 @@
     v1.6.4 @mentioned highlight improvements, invitation button bg color
     v1.6.5 Tweaks with comment blocks etc. background colors
     v1.6.6 Friends online badge fix, divider changes
+    v1.6.7 Code block improvements, bring back red "new messages" divider
  */
 
 
@@ -622,6 +623,7 @@
         height: 25px !important;
         width: 25px !important;
         line-height: 25px !important;
+        margin: -5px .05em -5px .1em !important;
     }
 
     /* Expanded description */
@@ -644,13 +646,16 @@
     .chat .divider { height: 10px !important; }
     .chat .divider > div { background: #474a4f; }
     .chat .messages-wrapper, .chat .messages-wrapper .scroller-wrap { padding-bottom: 3px; }
-    .messages-wrapper .messages .divider.divider-red>div { opacity: 1 !important; }
-    .messages-wrapper .messages .divider:not(.red) div { background: rgb(47,47,47) !important; }
+    .messages-wrapper .messages .divider div { background: rgb(47,47,47) !important; }
+    .messages-wrapper .messages .divider.divider-red>div { background: #f04747 !important; }
     .friends-table .messages .divider:before, .friends-table .messages .divider span, .messages-wrapper .messages .divider:before, .messages-wrapper .messages .divider span { background-color: transparent !important; }
     .message-group .comment .markup pre {
-        background: rgb(22,22,22) !important;
-        border-color: rgb(22,22,22) !important;
+        background: rgb(27,27,27) !important;
+        border-color: rgb(27,27,27) !important;
         display: inline-block;
+        margin-top: -11px !important;
+        position: relative !important;
+        bottom: -9px !important;
     }
     .message-group .markup pre code { background: transparent !important; }
     .messages-wrapper .messages .embed { border-color: rgb(47,47,47) !important; }
