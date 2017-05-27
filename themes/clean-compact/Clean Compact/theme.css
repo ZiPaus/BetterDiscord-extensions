@@ -1,4 +1,4 @@
-//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.6.2"}*//
+//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.6.7"}*//
 
 /*
     Installation
@@ -18,6 +18,11 @@
     v1.6.0 (May 5th 2017): New & improved look - less borders, more background shades.
     v1.6.1 Cozy mode improvements
     v1.6.2 Fixed memberlist loading indicator, other small tweaks
+    v1.6.3 Embed fixes (cozy mode paddings), message timestamp lineheight fix, modal font sizes
+    v1.6.4 @mentioned highlight improvements, invitation button bg color
+    v1.6.5 Tweaks with comment blocks etc. background colors
+    v1.6.6 Friends online badge fix, divider changes
+    v1.6.7 Code block improvements, bring back red "new messages" divider
  */
 
 
@@ -28,21 +33,14 @@
      */
 
     /* General */
-    a, abbr, acronym, address, applet, big, blockquote, body, caption, cite, code, dd, del, dfn, div, dl, dt, em, fieldset, form, h1, h2, h3, h4, h5, h6, html, iframe, img, ins, kbd, label, legend, li, object, ol, p, pre, q, s, samp, small, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, ul, var { font-size: 12px !important }
+    /*a, abbr, acronym, address, applet, big, blockquote, body, caption, cite, code, dd, del, dfn, div, dl, dt, em, fieldset, form, h1, h2, h3, h4, h5, h6, html, iframe, img, ins, kbd, label, legend, li, object, ol, p, pre, q, s, samp, small, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, ul, var, .modal *, .chat .new-messages-bar button:first-child { font-size: 12px !important }*/
+    * { font-size: 12px !important }
     /* Message timestamp */
     .message-group.compact .timestamp span { font-size: 12px !important; }
     /* Message (sender, content) */
     .message-text .markup span,
     .message-text .markup .user-name { font-size: 13px !important; }
 
-    /* Background image */
-    .app {
-        /*background: url(https://i.imgur.com/38O9SOp.jpg);*/
-        background-size: cover !important;
-        /*background-position: 50% 50% !important;*/
-    }
-
-    /* Adds a black background to the bottom 100px */
     .app > .flex-spacer,
     #friends .friends-table .friends-table-body { background: rgb(17,17,17) !important; }
 
@@ -65,9 +63,7 @@
     .friends-table,
     .guild-channels .channel-text.selected,
     .private-channels .channel.selected,
-    .guilds-add,
-    .message-group .mentioned .message-text,
-    .message-group .comment .markup pre {
+    .guilds-add {
         background: transparent !important;
         background-color: transparent !important;
     }
@@ -177,20 +173,17 @@
     /* Server buttons */
     .guilds .friends-online {
         font-size: 10px !important;
-        width: 13px !important;
+        width: 15px !important;
         height: 13px !important;
-        text-indent: 4px;
-        line-height: 13px;
-        white-space: nowrap;
-        margin: 5px 0;
+        text-indent: 3px;
         position: absolute;
         overflow: hidden;
         top: 30px;
-        left: 35px;
+        left: 33px;
         background: #738BD7;
         color: white !important;
-        border-radius: 50%;
-        letter-spacing: 3px;
+        border-radius: 5px;
+        word-spacing: 7px;
         opacity: 0.8;
         border: 2px solid rgb(40, 40, 40);
         z-index: 2;
@@ -252,6 +245,7 @@
         height: 18px;
     }
 
+    .guilds-wrapper .guilds .guild+.guild { margin-top: 10px; }
     .guilds-wrapper .guilds .guild.selected:before { display: none; }
 
     .guilds .guild-inner::before {
@@ -337,12 +331,16 @@
     }
 
     .guild-header header,
-    .private-channels .search-bar { height: 54px; background: rgb(27,27,27) !important; }
+    .private-channels .search-bar {
+        height: 53px;
+        background: rgb(27,27,27) !important;
+    }
     .guild-header header span {
         white-space: normal;
         line-height: 100%;
     }
 
+    .guild-channels .channel .channel-name { padding-right: 0 !important; }
     .guild-channels .channel-text .channel-name:before { color: #738bd7 !important; }
     .guild-channels .channel-text .badge {
         margin-left: -15px;
@@ -447,7 +445,7 @@
     }
     .account {
         background: rgb(27,27,27) !important;
-        height: 74px !important;
+        height: 69px !important;
         padding: 0 2px 12px !important;
         align-items: flex-end !important;
         border-top: none;
@@ -546,23 +544,26 @@
 
     /* Message section header */
     .chat > .title-wrap {
-        min-height: 54px;
+        min-height: 53px;
         box-shadow: none;
         border-bottom: none !important;
     }
     .chat .title-wrap .channel-name { color: #fff; }
     .chat > .title-wrap > .title .channel-name::before { color: #738BD7; }
+    .chat .jump-to-present-bar { background-color: rgb(47,47,47) !important; }
+    .chat .jump-to-present-bar:hover { background-color: rgb(57,57,57) !important; }
+    .chat .jump-to-present-bar button { color: #FFF !important; }
 
     /* Message textarea */
     .channel-textarea { margin: 10px 0 30px; }
     .channel-textarea-inner { background-color: hsla(0,0%,100%,.04) !important; border-color: rgba(255, 255, 255, 0.04); }
-    .channel-textarea-inner textarea { color: hsla(0,0%,100%,.7); }
+    .channel-textarea-inner textarea { color: hsla(0,0%,100%,.7); font-size: 1rem !important; }
     .channel-textarea-upload { border-color: #1c1e22; }
 
     /* Message styling */
     .message-group {
         padding: 5px 0;
-        margin-left: 10px;
+        margin-left: 15px;
         margin-right: 0;
         border-bottom: none;
         overflow: hidden;
@@ -580,9 +581,10 @@
         margin-top: 0;
     }
     .message-group.compact .comment .markup { margin-bottom: 0; }
-    .message-group .embed { background: rgb(27,27,27); border: none !important; }
+    .message-group .embed { background: rgb(22,22,22); border: none !important; }
     .message-group .embed-field .markup { margin-top: 0; }
     .message-group .message .markup a { white-space: pre; }
+    .message-group .mentioned .message-text { background: rgb(27,27,27) !important; }
 
     .message-group .avatar-large {
         margin-top: 0;
@@ -592,7 +594,7 @@
         background-size: 30px 30px;
     }
 
-    .message-group.compact .accessory { padding-left: 68px; }
+    .message-group.compact .accessory { padding-left: 92px; }
     .message .btn-option { position: relative; z-index: 3 !important; }
 
     .reaction { background: rgb(27,27,27) !important; transition: background 150ms; }
@@ -621,6 +623,7 @@
         height: 25px !important;
         width: 25px !important;
         line-height: 25px !important;
+        margin: -5px .05em -5px .1em !important;
     }
 
     /* Expanded description */
@@ -631,7 +634,10 @@
     }
 
     /* Chat @mention highlight */
+    .message-group .mentioned.first .message-text { margin-top: 5px !important; }
+    .message-group.compact .mentioned.first .message-text { margin-top: 0 !important; }
     .message-group .mentioned .message-text {
+        padding: 1px 3px !important;
         border-radius: 2px;
         border: solid #faa61a;
         border-width: 0 4px 0 0;
@@ -639,11 +645,20 @@
 
     .chat .divider { height: 10px !important; }
     .chat .divider > div { background: #474a4f; }
-    .chat .messages-wrapper, .chat .messages-wrapper .scroller-wrap { padding-bottoM: 3px; }
-    .messages-wrapper .messages .divider:not(.red) span { border-radius: 3px; }
-    .message-group .markup pre { display: inline-block; }
-    .message-group .markup pre code { background: rgba(255,255,255,0.05) !important; }
-    .messages-wrapper .messages .embed { border-color: rgba(242, 242, 242, 0.1) !important; }
+    .chat .messages-wrapper, .chat .messages-wrapper .scroller-wrap { padding-bottom: 3px; }
+    .messages-wrapper .messages .divider div { background: rgb(47,47,47) !important; }
+    .messages-wrapper .messages .divider.divider-red>div { background: #f04747 !important; }
+    .friends-table .messages .divider:before, .friends-table .messages .divider span, .messages-wrapper .messages .divider:before, .messages-wrapper .messages .divider span { background-color: transparent !important; }
+    .message-group .comment .markup pre {
+        background: rgb(27,27,27) !important;
+        border-color: rgb(27,27,27) !important;
+        display: inline-block;
+        margin-top: -11px !important;
+        position: relative !important;
+        bottom: -9px !important;
+    }
+    .message-group .markup pre code { background: transparent !important; }
+    .messages-wrapper .messages .embed { border-color: rgb(47,47,47) !important; }
 
     /* Messages from blocked people */
     .friends-table .messages .message-group-blocked,
@@ -707,26 +722,45 @@
     .message-group.compact .timestamp:hover { line-height: 15px; color: #99aab5 !important; }
 
     /* Embedded previews etc */
-    .embed .embed-provider,
-    .embed .embed-author,
-    .embed .embed-title  {
-        margin-bottom: 0;
+    .message-group.compact .embed { padding: 8px 10px; }
+    .message-group.compact .embed .embed-author,
+    .message-group.compact .embed .embed-title,
+    .message-group.compact .embed .embed-provider,
+    .message-group.compact .embed .embed-field-name {
+        margin-bottom: 0 !important;
     }
 
+    .embed {
+        padding: 12px 10px 8px;
+        background-color: rgb(22,22,22) !important;
+    }
+    .message-group .embed-wrapper .embed-color-pill { background-color: rgb(87,87,87) !important; }
     .embed .embed-provider,
     .embed .embed-author,
     .embed .embed-title,
     .embed .embed-field-name,
-    .embed .embed-field-value,
-    .embed .embed-description.markup {
+    .embed .embed-field-value {
         font-size: inherit !important;
     }
+    .embed .embed-description.markup {
+        font-size: inherit !important;
+        padding-left: 0 !important;
+        text-indent: 0 !important;
+    }
+
+    .embed .embed-description.markup a { display: block !important; }
     .embed .embed-description { color: hsla(0,0%,100%,.6); }
 
     .embed .image { margin: auto !important; }
-    .embed .embed-content { margin-bottom: 5px; }
+    .embed .embed-content { margin-bottom: 10px; }
     .embed .embed-fields .embed-field .embed-field-name { margin-bottom: -5px; }
     .embed .embed-fields .embed-field { padding-top: 0; }
+    .embed .embed-thumbnail { margin-top: 5px; }
+
+    .invite-button {
+        background-color: rgb(27,27,27) !important;
+        border-color: rgb(27,27,27) !important;
+    }
 
 
 /****************************** Server user list section ******************************/
@@ -917,7 +951,7 @@
 /******************************* Friends tab **********************************/
 
     #friends .friends-table { background: rgb(17,17,17); margin-top: 0; }
-    #friends .friends-table .friends-table-header { background: rgb(17,17,17); }
+    #friends .friends-table .friends-table-header { background: rgb(22,22,22); }
 
     #friends .friends-header,
     #friends .friends-table .friends-table-header,
@@ -927,7 +961,7 @@
 
     #friends .friends-header {
         height: 53px;
-        background: rgb(25,25,25) !important;
+        background: rgb(27,27,27) !important;
         border-bottom: none !important;
     }
 
@@ -973,7 +1007,7 @@
     .friends-table .messages .message-group .comment .markup code.inline,
     .friends-table .messages .message-group .comment .markup pre code,
     .messages-wrapper .messages .message-group .comment .markup code.inline {
-        background: #2e3136 !important;
+        background: rgb(27,27,27) !important;
     }
 
     .friends-table .messages .message-group.compact .timestamp,
@@ -1069,7 +1103,10 @@
 /********************************* Other BetterDiscord overwrites *********************************/
 
     /* BetterDiscord Public servers button */
-    #bd-pub-li { line-height: 35px !important; }
+    #bd-pub-li {
+        line-height: 35px !important;
+        margin: 5px 0 !important;
+    }
     #bd-pub-li .guild-inner,
     #bd-pub-button {
         line-height: 35px !important;
