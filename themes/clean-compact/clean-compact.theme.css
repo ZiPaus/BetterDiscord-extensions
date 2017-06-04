@@ -1,4 +1,4 @@
-//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.6.7"}*//
+//META{"name":"CleanCompact","description":"A dark, compact layout for those who like to save some space","author":"kettui","version":"1.6.8"}*//
 
 /*
     Installation
@@ -23,6 +23,7 @@
     v1.6.5 Tweaks with comment blocks etc. background colors
     v1.6.6 Friends online badge fix, divider changes
     v1.6.7 Code block improvements, bring back red "new messages" divider
+    v1.6.8 Fix random flickering effect when hovering over chat
  */
 
 
@@ -34,7 +35,11 @@
 
     /* General */
     /*a, abbr, acronym, address, applet, big, blockquote, body, caption, cite, code, dd, del, dfn, div, dl, dt, em, fieldset, form, h1, h2, h3, h4, h5, h6, html, iframe, img, ins, kbd, label, legend, li, object, ol, p, pre, q, s, samp, small, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, ul, var, .modal *, .chat .new-messages-bar button:first-child { font-size: 12px !important }*/
-    * { font-size: 12px !important }
+    * {
+        font-size: 12px !important;
+        /** Fixes random flickering effect */
+        backface-visibility: hidden !important;
+    }
     /* Message timestamp */
     .message-group.compact .timestamp span { font-size: 12px !important; }
     /* Message (sender, content) */
@@ -595,6 +600,16 @@
     }
 
     .message-group.compact .accessory { padding-left: 92px; }
+    .popout .message-group.compact .accessory {
+        padding-left: 10px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .popout .message-group .accessory {
+        padding-left: 10px;
+        margin-left: -55px;
+        margin-right: -10px;
+    }
     .message .btn-option { position: relative; z-index: 3 !important; }
 
     .reaction { background: rgb(27,27,27) !important; transition: background 150ms; }
@@ -718,8 +733,8 @@
     /* Compact message styling */
     .message-group.compact { padding: 0 !important; }
     .message-group.compact .message { margin: 3px 0; line-height: 25px; }
-    .message-group.compact .timestamp { line-height: 15px; color: #d1d9de; }
-    .message-group.compact .timestamp:hover { line-height: 15px; color: #99aab5 !important; }
+    .message-group.compact .timestamp { line-height: 15px !important; color: #d1d9de; }
+    .message-group.compact .timestamp:hover { color: #99aab5 !important; }
 
     /* Embedded previews etc */
     .message-group.compact .embed { padding: 8px 10px; }
@@ -734,7 +749,7 @@
         padding: 12px 10px 8px;
         background-color: rgb(22,22,22) !important;
     }
-    .message-group .embed-wrapper .embed-color-pill { background-color: rgb(87,87,87) !important; }
+    .message-group .embed-wrapper .embed-color-pill { background-color: rgb(87,87,87); }
     .embed .embed-provider,
     .embed .embed-author,
     .embed .embed-title,
